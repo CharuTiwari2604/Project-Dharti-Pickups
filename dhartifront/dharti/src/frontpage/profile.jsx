@@ -18,7 +18,9 @@ const ProfilePage = () => {
   const [pickups, setPickups] = useState([]);
   const [ecopoints, setEcopoints] = useState(0);
   const [leaderboard, setLeaderboard] = useState([]);
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  // const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true); // ✅ NEW
   const [showEditModal, setShowEditModal] = useState(false);
   const [showSetupModal, setShowSetupModal] = useState(false);
   const [editForm, setEditForm] = useState({ name: "" });
@@ -46,6 +48,7 @@ const ProfilePage = () => {
           bio: data.bio || "",
         });
         setProfileComplete(!!(data.location && data.phone && data.bio));
+setIsAuthenticated(true);
 
         // Ecopoints
         const pointsRes = await axios.get("/user/ecopoints", { withCredentials: true });
@@ -58,6 +61,10 @@ const ProfilePage = () => {
       } catch (err) {
         console.error("Error fetching profile:", err);
         setIsAuthenticated(false);
+      }
+      // extra 
+      finally {
+        setLoading(false); // ✅ Ensure it always stops loading
       }
     };
 
@@ -86,6 +93,11 @@ const ProfilePage = () => {
       alert("Error updating profile details");
     }
   };
+
+  // ✅ Handle loading state first
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   if (!isAuthenticated) {
     return (

@@ -24,11 +24,11 @@ export function HomePage() {
     const checkAuth = async () => {
       try {
         // const res = await axios.get("http://localhost:5000/api/user/profile", {
-        
+
         const res = await axios.get("https://project-dharti-pickups.onrender.com/api/user/profile", {
           // https://project-dharti-pickups.onrender.com
           withCredentials: true,
-        
+
         });
         if (res.data && res.data.email) {
           setIsLoggedIn(true);
@@ -42,11 +42,11 @@ export function HomePage() {
   }, []);
   // for loginnew
   useEffect(() => {
-  const params = new URLSearchParams(window.location.search);
-  if (params.get("login") === "true") {
-    setShowModal(true);
-  }
-}, []);
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("login") === "true") {
+      setShowModal(true);
+    }
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -60,9 +60,9 @@ export function HomePage() {
     alert("Logged out successfully.");
   };
   // banner
-const handleClose = () => {
-  setShowBanner(false);
-};
+  const handleClose = () => {
+    setShowBanner(false);
+  };
 
   return (
     <div className="homepage">
@@ -79,7 +79,7 @@ const handleClose = () => {
             <nav className="navlinks">
               <Link to="/profile">My Profile</Link>
               <Link to="/requestpickup">Request Pickup</Link>
-              
+
               {/* <Link to="/notifications">Notifications</Link> */}
               <Link to="/aboutus">About Us</Link>
 
@@ -105,13 +105,13 @@ const handleClose = () => {
 
       {/* banner */}
       {showBanner && (
-         <div className="fixed bottom-0 left-0 w-full bg-white/320 text-white border-t border-gray-300 shadow-md px-4 py-7 text-center z-50">
-    <span>
+        <div className="fixed bottom-0 left-0 w-full bg-white/90 text-white border-t border-gray-300 shadow-md px-4 py-7 text-center z-50">
+          <span>
             ⚠️ This is a demo project for educational use only. No real pickups are scheduled. Please do not submit sensitive information.
           </span>
           <button
             className="absolute top-2 right-4 text-white hover:text-gray-800 text-sm"
-     onClick={handleClose}
+            onClick={handleClose}
             aria-label="Close Disclaimer"
           >
             &times;
@@ -213,30 +213,30 @@ const handleClose = () => {
 
       {/* extra */}
       {showConfirmLogout && (
-  <div className="fixed inset-0 bg-white/7 bg-opacity-60 flex justify-center items-center z-50">
-    <div className="bg-white p-6 rounded shadow-md w-80">
-      <h2 className="text-xl font-bold mb-4">Confirm Logout</h2>
-      <p className="mb-4">Are you sure you want to logout?</p>
-      <div className="flex justify-end space-x-4">
-        <button
-          className="px-4 py-2 bg-gray-300 rounded"
-          onClick={() => setShowConfirmLogout(false)}
-        >
-          Cancel
-        </button>
-        <button
-          className="px-4 py-2 bg-red-500 text-white rounded cursor-pointer"
-          onClick={async () => {
-            await handleLogout();
-            setShowConfirmLogout(false);
-          }}
-        >
-          Logout
-        </button>
-      </div>
-    </div>
-  </div>
-)}
+        <div className="fixed inset-0 bg-white/7 bg-opacity-60 flex justify-center items-center z-50">
+          <div className="bg-white p-6 rounded shadow-md w-80">
+            <h2 className="text-xl font-bold mb-4">Confirm Logout</h2>
+            <p className="mb-4">Are you sure you want to logout?</p>
+            <div className="flex justify-end space-x-4">
+              <button
+                className="px-4 py-2 bg-gray-300 rounded"
+                onClick={() => setShowConfirmLogout(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className="px-4 py-2 bg-red-500 text-white rounded cursor-pointer"
+                onClick={async () => {
+                  await handleLogout();
+                  setShowConfirmLogout(false);
+                }}
+              >
+                Logout
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   )
