@@ -282,7 +282,8 @@ display: flex;
 }
 /* Vision & Mission Section */
 .vision-mission {
-  background: #27433a url('leaf-pattern.png') center/cover no-repeat;
+  background: #27433a ;
+  /* url('leaf-pattern.png') center/cover no-repeat; */
   color: #fff;
   padding: 4rem 1rem 6rem;
 }
