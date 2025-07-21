@@ -23,7 +23,10 @@ export function HomePage() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/user/profile", {
+        // const res = await axios.get("http://localhost:5000/api/user/profile", {
+        
+        const res = await axios.get("https://project-dharti-pickups.onrender.com/api/user/profile", {
+          // https://project-dharti-pickups.onrender.com
           withCredentials: true,
         
         });
@@ -47,7 +50,7 @@ export function HomePage() {
 
   const handleLogout = async () => {
     try {
-      await axios.post("http://localhost:5000/api/user/logout", {}, {
+      await axios.post("https://project-dharti-pickups.onrender.com/api/user/logout", {}, {
         withCredentials: true,
       });
     } catch (err) {

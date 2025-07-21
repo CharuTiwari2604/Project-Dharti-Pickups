@@ -1,40 +1,3 @@
-// import { useAuth } from "./frontpage/AuthContext";
-// import { useNavigate } from "react-router-dom";
-// import axios from "axios";
-
-// const Navbar = () => {
-//   const { user, setUser } = useAuth();
-//   const navigate = useNavigate();
-
-//   const handleLogout = async () => {
-//     await axios.post("http://localhost:5000/api/user/logout", {}, { withCredentials: true });
-//     setUser(null);
-//     navigate("/");
-//   };
-
-//   return (
-//     <nav className="p-4 flex justify-between items-center bg-green-600 text-white">
-//       <h1 className="text-2xl font-bold">Dharti</h1>
-//       <div>
-//         {user ? (
-//           <>
-//             <span className="mr-4">Welcome, {user.name || user.username}</span>
-//             <button onClick={handleLogout} className="bg-white text-green-600 px-4 py-2 rounded">Logout</button>
-//           </>
-//         ) : (
-//           <button onClick={() => navigate("/login")} className="bg-white text-green-600 px-4 py-2 rounded">Login</button>
-//         )}
-//       </div>
-//     </nav>
-//   );
-// };
-
-// export default Navbar;
-
-
-
-
-//new
 import React, { useState } from 'react';
 import ConfirmLogoutModal from './confirmlogout';
 import { useAuth } from "./frontpage/AuthContext";
@@ -49,7 +12,7 @@ const Navbar = () => {
   // Only called if user confirms logout
   const handleConfirmLogout = async () => {
     try {
-      await axios.post("http://localhost:5000/api/user/logout", {}, { withCredentials: true });
+      await axios.post("https://project-dharti-pickups.onrender.com/api/user/logout", {}, { withCredentials: true });
       setUser(null);
       setShowModal(false);
       navigate("/");

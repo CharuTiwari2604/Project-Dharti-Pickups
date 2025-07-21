@@ -30,7 +30,7 @@ import google from '../assets/google.png';
     try {
       setLoading(true);
       const res = await axios.post(
-        'http://localhost:5000/api/login',
+        'https://project-dharti-pickups.onrender.com/api/login',
         { email, password },
         { withCredentials: true }
       );
@@ -58,7 +58,7 @@ import google from '../assets/google.png';
     try {
       setLoading(true);
       const res = await axios.post(
-        'http://localhost:5000/api/register',
+        'https://project-dharti-pickups.onrender.com/api/register',
         { name, email, password },
         { withCredentials: true }
       );

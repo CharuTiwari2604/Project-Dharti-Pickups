@@ -8,7 +8,7 @@ const Leaderboard = () => {
   useEffect(() => {
     const fetchLeaderboard = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/leaderboard", {
+        const res = await axios.get("https://project-dharti-pickups.onrender.com/api/leaderboard", {
           withCredentials: true,
         });
         setLeaderboard(res.data); // Ensure your backend sends an array

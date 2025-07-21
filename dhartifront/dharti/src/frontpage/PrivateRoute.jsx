@@ -7,7 +7,7 @@ const PrivateRoute = ({ children }) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/user/profile", {
+      .get("https://project-dharti-pickups.onrender.com/api/user/profile", {
         withCredentials: true,
       })
       .then(() => setIsAuthenticated(true))
