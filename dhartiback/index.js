@@ -13,7 +13,7 @@ const app = express();
 
 app.use(cookieParser());
 app.use(cors({
-  origin: 'https://project-dharti-pickups-mpu6.vercel.app/',
+  origin: 'https://project-dharti-pickups-mpu6.vercel.app',
   credentials: true
 }));
 app.use(express.json());
