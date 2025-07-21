@@ -221,7 +221,8 @@ display: flex;
 /* fourth part */
 .fourthpart{
 .features-section {
-  background: #27433a url('leaf-pattern.png') center/cover no-repeat;
+  background: #27433a ;
+  /* url('leaf-pattern.png') center/cover no-repeat; */
   padding: 4rem 1rem;
 }
 .cards-container {
