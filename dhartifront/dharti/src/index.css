@@ -1,8 +1,11 @@
 /* @import "tailwindcss";
 @plugin "flowbite-react/plugin/tailwindcss";
 @source "../../.flowbite-react/class-list.json"; */
-@import "tailwindcss/preflight";
-@import "tailwindcss/utilities";
+/* @import "tailwindcss/preflight";
+@import "tailwindcss/utilities"; */
+@import "tailwindcss";
+@config "./tailwind.config.js";
+
 .homepage{
 
 .header {

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import '../index.css';
-import '../responsive.css';
 import logo from '../assets/logooo.png';
 import bg from '../assets/bg.jpg';
 import { Link } from "react-router-dom";

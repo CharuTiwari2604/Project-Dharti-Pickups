@@ -14,7 +14,9 @@ const getLevel = (points) => {
 };
 
 const ProfilePage = () => {
-  const [user, setUser] = useState({});
+  // const [user, setUser] = useState({});
+  
+  const [user, setUser] = useState(null);
   const [pickups, setPickups] = useState([]);
   const [ecopoints, setEcopoints] = useState(0);
   const [leaderboard, setLeaderboard] = useState([]);
@@ -48,14 +50,14 @@ const ProfilePage = () => {
           bio: data.bio || "",
         });
         setProfileComplete(!!(data.location && data.phone && data.bio));
-setIsAuthenticated(true);
+        setIsAuthenticated(true);
 
         // Ecopoints
         const pointsRes = await axios.get("/user/ecopoints", { withCredentials: true });
         setEcopoints(pointsRes.data.ecopoints);
 
         // Leaderboard
-        const leaderboardRes = await axios.get("/leaderboard");
+        const leaderboardRes = await axios.get("/leaderboard", { withCredentials: true });
         setLeaderboard(leaderboardRes.data);
 
       } catch (err) {
@@ -96,8 +98,12 @@ setIsAuthenticated(true);
 
   // ✅ Handle loading state first
   if (loading) {
-    return <div>Loading...</div>;
-  }
+  return (
+    <div className="loading-spinner">
+      <p>Loading profile...</p>
+    </div>
+  );
+}
 
   if (!isAuthenticated) {
     return (
@@ -240,8 +246,8 @@ setIsAuthenticated(true);
                 </td>
                 <td className="py-3 px-2">
                   <span className={`px-3 py-1 rounded-full text-sm font-medium ${entry.ecoPoints >= 1000 ? 'bg-purple-100 text-purple-700'
-                      : entry.ecoPoints >= 500 ? 'bg-yellow-100 text-yellow-700'
-                        : 'bg-gray-100 text-gray-700'
+                    : entry.ecoPoints >= 500 ? 'bg-yellow-100 text-yellow-700'
+                      : 'bg-gray-100 text-gray-700'
                     }`}>
                     {getLevel(entry.ecoPoints)}
                   </span>
