@@ -13,7 +13,7 @@ const requestPickupRoutes = require('./App/Routes/web/requestpickuproutes');
 const app = express();
 app.set('trust proxy', 1); // For proper cookie handling behind proxies
 
-const allowed = [
+const allowedOrigins = [
   'https://project-dharti-pickups-mpu6.vercel.app',
   'http://localhost:5173',
 ];
