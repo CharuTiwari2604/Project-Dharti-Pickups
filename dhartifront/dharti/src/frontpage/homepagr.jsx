@@ -16,32 +16,20 @@ export function HomePage() {
   const [showModal, setShowModal] = useState(false);
   const [loadingAuth, setLoadingAuth] = useState(true); //extra
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [showBanner, setShowBanner] = useState(true);
+  const [showBanner, setShowBanner] = useState(false);
   const [showConfirmLogout, setShowConfirmLogout] = useState(false);
 
-  // useEffect(() => {
-  //   const checkAuth = async () => {
-  //     try {
-  //       // const res = await axios.get("http://localhost:5000/api/user/profile", {
+    useEffect(() => {
+    // Show banner after a delay
+    const timer = setTimeout(() => {
+      setShowBanner(true);
+    }, 500); // Delay in ms
 
-  //       const res = await axios.get("https://project-dharti-pickups.onrender.com/api/user/profile", {
-  //         // https://project-dharti-pickups.onrender.com
-  //         withCredentials: true,
+    return () => clearTimeout(timer);
+  }, []);
 
-  //       });
-  //       if (res.data && res.data.email) {
-  //         setIsLoggedIn(true);
-  //       }
-  //     } catch (err) {
-  //       setIsLoggedIn(false);
-  //     }
-  //   };
-
-  //   checkAuth();
-  // }, []);
-
-  //new
   useEffect(() => {
+     
   const checkAuth = async () => {
     try {
       await axios.get("/api/user/profile");
@@ -128,8 +116,21 @@ export function HomePage() {
       </div>
 
       {/* banner */}
-      {showBanner && (
-        <div className="fixed bottom-0 left-0 w-full bg-white/90 text-white border-t border-gray-300 shadow-md px-4 py-7 text-center z-50">
+      <div className="fixed bottom-0 left-0 w-full bg-white/90 text-black border-t border-gray-300 shadow-md px-4 py-7 text-center z-[1000]">
+  <span>
+    ⚠️ This is a demo project for educational use only. No real pickups are scheduled.
+  </span>
+  <button
+    className="absolute top-2 right-4 text-black hover:text-gray-800 text-sm"
+    onClick={() => alert('Banner close clicked')}
+    aria-label="Close Disclaimer"
+  >
+    &times;
+  </button>
+</div>
+
+      {/* {showBanner && (
+        <div className="fixed bottom-0 left-0 w-full bg-black/60 text-white border-t border-gray-300 shadow-md px-4 py-7 text-center z-[9999]">
           <span>
             ⚠️ This is a demo project for educational use only. No real pickups are scheduled. Please do not submit sensitive information.
           </span>
@@ -141,7 +142,7 @@ export function HomePage() {
             &times;
           </button>
         </div>
-      )}
+      )} */}
 
       {/* second part */}
       <div className="secondpart">
@@ -176,6 +177,7 @@ export function HomePage() {
       </div>
 
       {/* third part */}
+
       <div className="thirdpart">
         <section className="waste-experience">
           <h2>We Have Experience In Handling All Kinds Of Waste!</h2>

@@ -1,13 +1,16 @@
-//  import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
 export default defineConfig({
-  // plugins: [react(), tailwindcss()],
-
   plugins: [react()],
+
+  base: "./", // Optional: for relative asset paths if needed
+
+  build: {
+    outDir: "dist",
+  },
+
   server: {
-    // port: 5173,
     proxy: {
       "/api": {
         target: "http://localhost:5000",
@@ -16,11 +19,8 @@ export default defineConfig({
       },
     },
   },
-  base: "./",
-  build: {
-    outDir: "dist",
-  }
 });
+
 
 // import react from "@vitejs/plugin-react";
 // import { defineConfig } from "vite";

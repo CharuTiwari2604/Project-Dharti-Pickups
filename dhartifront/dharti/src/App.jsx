@@ -1,4 +1,5 @@
 import React from 'react';
+import './index.css';
 import { Routes, Route } from 'react-router-dom';
 import { HomePage } from './frontpage/homepagr';
 import { RequestPickup } from './frontpage/requestpickup';
