@@ -10,12 +10,33 @@ const userRoutes = require('./App/Routes/web/userroutes');
 const requestPickupRoutes = require('./App/Routes/web/requestpickuproutes');
 
 const app = express();
+app.set('trust proxy', 1); // For proper cookie handling behind proxies
+
+const allowedOrigins = [
+  'https://project-dharti-pickups-mpu6.vercel.app',
+  'http://localhost:5173', // Vite dev server (use your actual port if different)
+];
 
 app.use(cookieParser());
+// app.use(cors({
+//   origin: 'https://project-dharti-pickups-mpu6.vercel.app',
+//   credentials: true
+// }));
 app.use(cors({
-  origin: 'https://project-dharti-pickups-mpu6.vercel.app',
-  credentials: true
+  origin: (origin, callback) => {
+    // allow non-browser requests
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error(`Origin ${origin} not allowed by CORS`));
+    }
+  },
+  credentials: true,
 }));
+app.options('*', cors());
+
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
