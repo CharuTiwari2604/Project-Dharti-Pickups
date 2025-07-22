@@ -39,7 +39,9 @@ const ProfilePage = () => {
     const fetchData = async () => {
       try {
         // Profile
-        const res = await axios.get("/user/profile", { withCredentials: true });
+        const res = await axios.get("/api/user/profile"
+          // ,{ withCredentials: true }
+        );
         const data = res.data;
         setUser(data);
         setPickups(data.pickups || []);
@@ -53,11 +55,13 @@ const ProfilePage = () => {
         setIsAuthenticated(true);
 
         // Ecopoints
-        const pointsRes = await axios.get("/user/ecopoints", { withCredentials: true });
+        const pointsRes = await axios.get("/api/user/ecopoints")
+        // , { withCredentials: true });
         setEcopoints(pointsRes.data.ecopoints);
 
         // Leaderboard
-        const leaderboardRes = await axios.get("/leaderboard", { withCredentials: true });
+        const leaderboardRes = await axios.get("/api/leaderboard")
+        // , { withCredentials: true });
         setLeaderboard(leaderboardRes.data);
 
       } catch (err) {
@@ -76,7 +80,8 @@ const ProfilePage = () => {
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put("/user/profile", { username: editForm.name }, { withCredentials: true });
+      await axios.put("/api/user/profile", { username: editForm.name }),
+      //  { withCredentials: true });
       setUser((prev) => ({ ...prev, name: editForm.name }));
       setShowEditModal(false);
     } catch (err) {
@@ -87,7 +92,8 @@ const ProfilePage = () => {
   const handleSetupSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put("/user/profile", profileForm, { withCredentials: true });
+      await axios.put("/api/user/profile", profileForm)
+      // , { withCredentials: true });
       setUser((prev) => ({ ...prev, ...profileForm }));
       setProfileComplete(true);
       setShowSetupModal(false);

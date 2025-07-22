@@ -4,7 +4,7 @@ import logo from '../assets/logooo.png';
 import bg from '../assets/bg.jpg';
 import { Link } from "react-router-dom";
 import SignIn from './signin';
-import axios from "axios";
+import axios from "../api/axiosConfig";
 import box1 from '../assets/box1.jpg';
 import box2 from '../assets/box2.jpg';
 import box3 from '../assets/box3.jpg';
@@ -12,33 +12,53 @@ import box4 from '../assets/box4.jpg';
 import box5 from '../assets/box5.jpg';
 import logo2 from '../assets/visionfinal.png';
 
-
 export function HomePage() {
   const [showModal, setShowModal] = useState(false);
+  const [loadingAuth, setLoadingAuth] = useState(true); //extra
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showBanner, setShowBanner] = useState(true);
   const [showConfirmLogout, setShowConfirmLogout] = useState(false);
 
+  // useEffect(() => {
+  //   const checkAuth = async () => {
+  //     try {
+  //       // const res = await axios.get("http://localhost:5000/api/user/profile", {
+
+  //       const res = await axios.get("https://project-dharti-pickups.onrender.com/api/user/profile", {
+  //         // https://project-dharti-pickups.onrender.com
+  //         withCredentials: true,
+
+  //       });
+  //       if (res.data && res.data.email) {
+  //         setIsLoggedIn(true);
+  //       }
+  //     } catch (err) {
+  //       setIsLoggedIn(false);
+  //     }
+  //   };
+
+  //   checkAuth();
+  // }, []);
+
+  //new
   useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        // const res = await axios.get("http://localhost:5000/api/user/profile", {
-
-        const res = await axios.get("https://project-dharti-pickups.onrender.com/api/user/profile", {
-          // https://project-dharti-pickups.onrender.com
-          withCredentials: true,
-
-        });
-        if (res.data && res.data.email) {
-          setIsLoggedIn(true);
-        }
-      } catch (err) {
-        setIsLoggedIn(false);
+  const checkAuth = async () => {
+    try {
+      await axios.get("/api/user/profile");
+      setIsLoggedIn(true);
+    } catch (err) {
+      if (err.response?.status !== 401) {
+        console.error("Auth error", err);
       }
-    };
+      setIsLoggedIn(false);
+    } finally {
+      setLoadingAuth(false);
+    }
+  };
+  checkAuth();
+}, []);
 
-    checkAuth();
-  }, []);
+
   // for loginnew
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -49,9 +69,10 @@ export function HomePage() {
 
   const handleLogout = async () => {
     try {
-      await axios.post("https://project-dharti-pickups.onrender.com/api/user/logout", {}, {
-        withCredentials: true,
-      });
+      // await axios.post("https://project-dharti-pickups.onrender.com/api/user/logout", {}, {
+      //   withCredentials: true,
+      // });
+      await axios.post("/api/user/logout");
     } catch (err) {
       console.error("Logout failed", err);
     }
@@ -62,6 +83,10 @@ export function HomePage() {
   const handleClose = () => {
     setShowBanner(false);
   };
+
+  if (loadingAuth) {
+  return <div>Loading…</div>; // simple loader placeholder
+}
 
   return (
     <div className="homepage">
@@ -158,14 +183,14 @@ export function HomePage() {
           <div className="check-grid">
             <div className="cell"><span className="check-icon">✔️</span> Waste Papers</div>
             <div className="cell"><span className="check-icon">✔️</span> Electronic Waste</div>
-            <div className="cell highlight"><span class="check-icon">✔️</span> Metallic Waste</div>
+            <div className="cell highlight"><span className="check-icon">✔️</span> Metallic Waste</div>
 
             <div className="cell"><span className="check-icon">✔️</span> Packaging Plastic</div>
             <div className="cell"><span className="check-icon">✔️</span> Hard Plastic</div>
             <div className="cell"><span className="check-icon">✔️</span> Textile Waste</div>
           </div>
 
-          <p class="callout">
+          <p className="callout">
             We already made huge strides in our services and sustainability journey by investing in plastic recycling.
             <a href="#" className="link">Awards And Milestones →</a>
           </p>
@@ -201,9 +226,9 @@ export function HomePage() {
                 <span className="vision">Vision &amp; Mission</span>
               </div>
               <h2>Create a circular
-                <span className="highlight"> World</span> where nothing is <span class="highlight">Wasted</span> and every resource is <span class="highlight">Valued</span>.
+                <span className="highlight"> World</span> where nothing is <span className="highlight">Wasted</span> and every resource is <span className="highlight">Valued</span>.
               </h2>
-              <p>Thank you for joining our mission together, we’re turning waste into worth. Want to learn more <a href="aboutus" class="link2">about us</a> or get involved by <a href="requestpickup" class="link2">contributing</a> ?
+              <p>Thank you for joining our mission together, we’re turning waste into worth. Want to learn more <a href="aboutus" className="link2">about us</a> or get involved by <a href="requestpickup" className="link2">contributing</a> ?
               </p>
             </div>
           </section>

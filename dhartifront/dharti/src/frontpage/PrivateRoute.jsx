@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../api/axiosConfig";
 import { Navigate } from "react-router-dom";
 
 const PrivateRoute = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
 
   useEffect(() => {
-    axios
-      .get("https://project-dharti-pickups.onrender.com/api/user/profile", {
-        withCredentials: true,
-      })
+    // axios.get("https://project-dharti-pickups.onrender.com/api/user/profile", {
+    //     withCredentials: true,
+    //   })
+    axios.get("/api/user/profile")
       .then(() => setIsAuthenticated(true))
       .catch(() => setIsAuthenticated(false));
   }, []);

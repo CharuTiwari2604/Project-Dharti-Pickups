@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../index.css";
-import axios from "axios";
+import axios from "../api/axiosConfig";
 import { useNavigate } from "react-router-dom";
 import bgreq from '../assets/bgreqpickup.jpg';
 
@@ -61,10 +61,12 @@ export function RequestPickup() {
         try {
             setLoading(true);
             const res = await axios.post(
-                "https://project-dharti-pickups.onrender.com/api/requestpickup/request",
+                // "https://project-dharti-pickups.onrender.com/api/requestpickup/request",
+                
+                "/api/requestpickup/request",
                 formData,
                 {
-                    withCredentials: true,
+                    // withCredentials: true,
                     headers: {
                         // Content-Type is automatically set by Axios for FormData
                     },

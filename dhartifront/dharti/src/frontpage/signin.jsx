@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axios from "../api/axiosConfig";
 import '../index.css';
-import google from '../assets/google.png';
 
   const SignIn = ({ isOpen, onClose, onLoginSuccess }) => {
   const [activeTab, setActiveTab] = useState('login');
@@ -30,9 +29,10 @@ import google from '../assets/google.png';
     try {
       setLoading(true);
       const res = await axios.post(
-        'https://project-dharti-pickups.onrender.com/api/login',
+        // 'https://project-dharti-pickups.onrender.com/api/login',
+        '/api/login',
         { email, password },
-        { withCredentials: true }
+        // { withCredentials: true }
       );
 
       alert('Login Successful');
@@ -58,9 +58,10 @@ import google from '../assets/google.png';
     try {
       setLoading(true);
       const res = await axios.post(
-        'https://project-dharti-pickups.onrender.com/api/register',
+        // 'https://project-dharti-pickups.onrender.com/api/register',
+        '/api/register',
         { name, email, password },
-        { withCredentials: true }
+        // { withCredentials: true }
       );
 
       alert('Sign In Successful');

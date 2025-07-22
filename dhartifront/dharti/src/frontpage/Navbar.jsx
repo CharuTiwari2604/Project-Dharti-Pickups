@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ConfirmLogoutModal from './confirmlogout';
 import { useAuth } from "./frontpage/AuthContext";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "../api/axiosConfig";
 
 const Navbar = () => {
   const { user, setUser } = useAuth();
@@ -12,7 +12,8 @@ const Navbar = () => {
   // Only called if user confirms logout
   const handleConfirmLogout = async () => {
     try {
-      await axios.post("https://project-dharti-pickups.onrender.com/api/user/logout", {}, { withCredentials: true });
+      // await axios.post("https://project-dharti-pickups.onrender.com/api/user/logout", {}, { withCredentials: true });
+      await axios.post("/api/user/logout");
       setUser(null);
       setShowModal(false);
       navigate("/");

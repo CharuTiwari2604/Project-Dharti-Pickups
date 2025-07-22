@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../api/axiosConfig";
 import { Crown, User, Award } from "lucide-react";
 
 const Leaderboard = () => {
@@ -8,9 +8,10 @@ const Leaderboard = () => {
   useEffect(() => {
     const fetchLeaderboard = async () => {
       try {
-        const res = await axios.get("https://project-dharti-pickups.onrender.com/api/leaderboard", {
-          withCredentials: true,
-        });
+        // const res = await axios.get("https://project-dharti-pickups.onrender.com/api/leaderboard", {
+        //   withCredentials: true,
+        // });
+        const res = await axios.get("/api/leaderboard")
         setLeaderboard(res.data); // Ensure your backend sends an array
         console.log("Leaderboard Data:", res.data);
       } catch (err) {
