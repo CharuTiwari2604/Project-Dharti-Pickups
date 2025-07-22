@@ -23,23 +23,36 @@ app.use(cookieParser());
 //   credentials: true
 // }));
 app.use(cors({
-  origin: (origin, callback) => {
-    // allow non-browser requests
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) {
-      return callback(null, true);
+   origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
     } else {
-      return callback(new Error(`Origin ${origin} not allowed by CORS`));
+      callback(new Error(`Origin ${origin} not allowed by CORS`));
     }
   },
   credentials: true,
 }));
 app.options('*', cors());
 
+// Session setup
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',  // true in prod (HTTPS)
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+    maxAge: 24 * 60 * 60 * 1000,
+  },
+}));
 
+
+//parsing
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+//routes
 app.use('/api', authRouter);
 app.use('/api/leaderboard', leadRouter);
 app.use('/api/user', userRoutes);
@@ -50,7 +63,7 @@ app.use('/api', require('./App/Routes/web/newPickuproutes'));
 app.use('/api', require('./App/Routes/web/leaderboardroutes'));
 
 
-
+//error handler
 app.use((err, req, res, next) => {
   console.error('Error:', err);
   if (err.name === 'MulterError') {
