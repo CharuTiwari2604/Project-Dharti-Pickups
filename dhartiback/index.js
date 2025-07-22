@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
+const session = require('express-session');
 
 const authRouter = require('./App/Routes/web/authroutes');
 const leadRouter = require('./App/Routes/web/leaderboardroutes');
@@ -12,27 +13,39 @@ const requestPickupRoutes = require('./App/Routes/web/requestpickuproutes');
 const app = express();
 app.set('trust proxy', 1); // For proper cookie handling behind proxies
 
-const allowedOrigins = [
+const allowed = [
   'https://project-dharti-pickups-mpu6.vercel.app',
-  'http://localhost:5173', // Vite dev server (use your actual port if different)
+  'http://localhost:5173',
 ];
 
-app.use(cookieParser());
+
 // app.use(cors({
 //   origin: 'https://project-dharti-pickups-mpu6.vercel.app',
 //   credentials: true
 // }));
+// app.use(cors({
+//    origin: (origin, callback) => {
+//     if (!origin || allowedOrigins.includes(origin)) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error(`Origin ${origin} not allowed by CORS`));
+//     }
+//   },
+//   credentials: true,
+// }));
 app.use(cors({
-   origin: (origin, callback) => {
+  origin: (origin, callback) => {
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      callback(new Error(`Origin ${origin} not allowed by CORS`));
+      callback(new Error(`CORS block: ${origin}`));
     }
   },
   credentials: true,
 }));
-app.options('*', cors());
+
+// app.options('*', cors());
+app.use(cookieParser());
 
 // Session setup
 app.use(session({
@@ -43,7 +56,8 @@ app.use(session({
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',  // true in prod (HTTPS)
     sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-    maxAge: 24 * 60 * 60 * 1000,
+    // maxAge: 24 * 60 * 60 * 1000,
+    maxAge: 86400000, //1day
   },
 }));
 
@@ -74,9 +88,9 @@ app.use((err, req, res, next) => {
 
 // mongoose.connect(process.env.DBURL)
 mongoose.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
 
   .then(() => {
     console.log('Connected to MongoDB');
