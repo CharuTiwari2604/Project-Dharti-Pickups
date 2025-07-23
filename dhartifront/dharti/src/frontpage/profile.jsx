@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from '../api/axiosConfig';
 import { Link, useNavigate } from "react-router-dom";
 import avatar from "../assets/avatar.jpg";
+import Spinner from "./Spinner";
 import "../index.css";
 import { Award, Crown, User } from 'lucide-react';
 
@@ -20,9 +21,8 @@ const ProfilePage = () => {
   const [pickups, setPickups] = useState([]);
   const [ecopoints, setEcopoints] = useState(0);
   const [leaderboard, setLeaderboard] = useState([]);
-  // const [isAuthenticated, setIsAuthenticated] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [loading, setLoading] = useState(true); // ✅ NEW
+    const [loadingAuth, setLoadingAuth] = useState(true); 
   const [showEditModal, setShowEditModal] = useState(false);
   const [showSetupModal, setShowSetupModal] = useState(false);
   const [editForm, setEditForm] = useState({ name: "" });
@@ -70,7 +70,7 @@ const ProfilePage = () => {
       }
       // extra 
       finally {
-        setLoading(false); // ✅ Ensure it always stops loading
+        setLoadingAuth(false); // ✅ Ensure it always stops loading
       }
     };
 
@@ -102,14 +102,14 @@ const ProfilePage = () => {
     }
   };
 
-  // ✅ Handle loading state first
-  if (loading) {
-  return (
-    <div className="loading-spinner">
-      <p>Loading profile...</p>
-    </div>
-  );
-}
+  if (loadingAuth) {
+    return (
+      <div className="loading-screen" style={{ height: '100vh' }}>
+        <Spinner />
+      </div>
+    );
+  }
+
 
   if (!isAuthenticated) {
     return (
