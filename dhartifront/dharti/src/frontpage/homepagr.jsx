@@ -3,6 +3,7 @@ import '../index.css';
 import logo from '../assets/logooo.png';
 import bg from '../assets/bg.jpg';
 import { Link } from "react-router-dom";
+import Spinner from "./Spinner";
 import SignIn from './signin';
 import axios from "../api/axiosConfig";
 import box1 from '../assets/box1.jpg';
@@ -72,9 +73,13 @@ export function HomePage() {
     setShowBanner(false);
   };
 
-  if (loadingAuth) {
-  return <div>Loading…</div>; // simple loader placeholder
-}
+   if (loading) {
+    return (
+      <div className="loading-screen" style={{ height: '100vh' }}>
+        <Spinner />
+      </div>
+    );
+  }
 
   return (
     <div className="homepage">
@@ -91,8 +96,6 @@ export function HomePage() {
             <nav className="navlinks">
               <Link to="/profile">My Profile</Link>
               <Link to="/requestpickup">Request Pickup</Link>
-
-              {/* <Link to="/notifications">Notifications</Link> */}
               <Link to="/aboutus">About Us</Link>
 
               {isLoggedIn ? (
@@ -115,20 +118,6 @@ export function HomePage() {
         <div className="side">We close the loop by transforming trash into treasure, reducing landfill impact and creating sustainable value for our planet.</div>
       </div>
 
-      {/* banner */}
-      {/* <div className="fixed bottom-0 left-0 w-full bg-white/90 text-black border-t border-gray-300 shadow-md px-4 py-7 text-center z-[1000]">
-  <span>
-    ⚠️ This is a demo project for educational use only. No real pickups are scheduled.
-  </span>
-  <button
-    className="absolute top-2 right-4 text-black hover:text-gray-800 text-sm"
-    onClick={() => alert('Banner close clicked')}
-    aria-label="Close Disclaimer"
-  >
-    &times;
-  </button>
-</div> */}
-{/* right one */}
       {showBanner && (
         <div className="fixed bottom-0 left-0 w-full bg-black/60 text-white border-t border-gray-300 shadow-md px-4 py-7 text-center z-[9999]">
           <span>
@@ -143,21 +132,6 @@ export function HomePage() {
           </button>
         </div>
       )}
-
-      {/* for css */}
-      {/* <div className="banner">
-  <span className="banner__message">
-    ⚠️ This is a demo project for educational use only. No real pickups are scheduled.
-  </span>
-  <button
-    className="banner__close-btn"
-    onClick={() => alert('Banner close clicked')}
-    aria-label="Close Disclaimer"
-  >
-    &times;
-  </button>
-</div> */}
-
 
       {/* second part */}
       <div className="secondpart">

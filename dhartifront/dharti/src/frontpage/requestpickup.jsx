@@ -3,6 +3,7 @@ import "../index.css";
 import axios from "../api/axiosConfig";
 import { useNavigate } from "react-router-dom";
 import bgreq from '../assets/bgreqpickup.jpg';
+import debounce from 'lodash.debounce';
 
 export function RequestPickup() {
     const [location, setLocation] = useState("");
@@ -34,11 +35,22 @@ export function RequestPickup() {
             setSuggestions([]);
         }
     };
+      // Debounce the API call so it's triggered only after 500ms of inactivity
+  const debouncedFetch = useMemo(
+    () => debounce(fetchSuggestions, 500),
+    [fetchSuggestions]
+  );
+
+  useEffect(() => {
+    return () => debouncedFetch.cancel(); // Cleanup on unmount
+  }, [debouncedFetch]);
+
 
     const handleLocationChange = (e) => {
         const value = e.target.value;
         setLocationInput(value);
-        fetchSuggestions(value);
+        // fetchSuggestions(value);
+  debouncedFetch(value); // 👈 correct: uses debounce
     };
 
     const handleSuggestionClick = (place) => {
@@ -104,7 +116,7 @@ export function RequestPickup() {
                             type="text"
                             value={locationInput}
                             onChange={handleLocationChange}
-                            placeholder="Enter your location"
+                            placeholder="Enter your location" 
                             className="w-full border border-gray-300 rounded px-4 py-2"
                             required
                         />
@@ -146,7 +158,7 @@ export function RequestPickup() {
                                 className="waste"
                                 type="text"
                                 id="weight"
-                                placeholder="eg. 50Kg"
+                                placeholder="eg. 50"
                                 value={weight}
                                 onChange={(e) => setWeight(e.target.value)}
                                 required
