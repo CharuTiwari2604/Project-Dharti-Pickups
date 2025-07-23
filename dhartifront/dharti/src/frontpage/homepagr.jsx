@@ -116,7 +116,7 @@ export function HomePage() {
       </div>
 
       {/* banner */}
-      <div className="fixed bottom-0 left-0 w-full bg-white/90 text-black border-t border-gray-300 shadow-md px-4 py-7 text-center z-[1000]">
+      {/* <div className="fixed bottom-0 left-0 w-full bg-white/90 text-black border-t border-gray-300 shadow-md px-4 py-7 text-center z-[1000]">
   <span>
     ⚠️ This is a demo project for educational use only. No real pickups are scheduled.
   </span>
@@ -127,8 +127,8 @@ export function HomePage() {
   >
     &times;
   </button>
-</div>
-
+</div> */}
+{/* right one */}
       {/* {showBanner && (
         <div className="fixed bottom-0 left-0 w-full bg-black/60 text-white border-t border-gray-300 shadow-md px-4 py-7 text-center z-[9999]">
           <span>
@@ -143,6 +143,21 @@ export function HomePage() {
           </button>
         </div>
       )} */}
+
+      {/* for css */}
+      <div className="banner">
+  <span className="banner__message">
+    ⚠️ This is a demo project for educational use only. No real pickups are scheduled.
+  </span>
+  <button
+    className="banner__close-btn"
+    onClick={() => alert('Banner close clicked')}
+    aria-label="Close Disclaimer"
+  >
+    &times;
+  </button>
+</div>
+
 
       {/* second part */}
       <div className="secondpart">
@@ -194,7 +209,7 @@ export function HomePage() {
 
           <p className="callout">
             We already made huge strides in our services and sustainability journey by investing in plastic recycling.
-            <a href="#" className="link">Awards And Milestones →</a>
+            {/* <a href="#" className="link">Awards And Milestones →</a> */}
           </p>
         </section>
       </div>
