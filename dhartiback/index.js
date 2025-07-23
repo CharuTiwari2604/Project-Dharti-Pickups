@@ -15,6 +15,7 @@ app.set('trust proxy', 1); // For proper cookie handling behind proxies
 
 const allowedOrigins = [
   'https://project-dharti-pickups-mpu6.vercel.app',
+  'https://project-dharti-pickups.onrender.com', 
   'http://localhost:5173',
 ];
 
