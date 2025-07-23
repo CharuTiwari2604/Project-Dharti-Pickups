@@ -64,13 +64,22 @@ app.use('/api', require('./App/Routes/web/leaderboardroutes'));
 
 
 //error handler
+// app.use((err, req, res, next) => {
+//   console.error('Error:', err);
+//   if (err.name === 'MulterError') {
+//     return res.status(400).json({ message: err.message });
+//   }
+//   res.status(500).json({ message: 'Internal server error' });
+// });
 app.use((err, req, res, next) => {
-  console.error('Error:', err);
-  if (err.name === 'MulterError') {
-    return res.status(400).json({ message: err.message });
-  }
-  res.status(500).json({ message: 'Internal server error' });
+  console.error('Global error:', err);
+  if (res.headersSent) return next(err);
+  res.status(err.statusCode || 500).json({
+    success: false,
+    message: err.message || 'Internal Server Error'
+  });
 });
+
 
 // mongoose.connect(process.env.DBURL)
 mongoose.connect(process.env.MONGO_URI, {
