@@ -129,7 +129,7 @@ export function HomePage() {
   </button>
 </div> */}
 {/* right one */}
-      {/* {showBanner && (
+      {showBanner && (
         <div className="fixed bottom-0 left-0 w-full bg-black/60 text-white border-t border-gray-300 shadow-md px-4 py-7 text-center z-[9999]">
           <span>
             ⚠️ This is a demo project for educational use only. No real pickups are scheduled. Please do not submit sensitive information.
@@ -142,10 +142,10 @@ export function HomePage() {
             &times;
           </button>
         </div>
-      )} */}
+      )}
 
       {/* for css */}
-      <div className="banner">
+      {/* <div className="banner">
   <span className="banner__message">
     ⚠️ This is a demo project for educational use only. No real pickups are scheduled.
   </span>
@@ -156,7 +156,7 @@ export function HomePage() {
   >
     &times;
   </button>
-</div>
+</div> */}
 
 
       {/* second part */}
