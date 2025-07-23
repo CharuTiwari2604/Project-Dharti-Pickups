@@ -73,7 +73,7 @@ export function HomePage() {
     setShowBanner(false);
   };
 
-   if (loading) {
+   if (loadingAuth) {
     return (
       <div className="loading-screen" style={{ height: '100vh' }}>
         <Spinner />
