@@ -20,7 +20,7 @@ function App() {
     </Routes>
     </main>
     
-    <footer className="text-center text-sm text-gray-500 mt-9.5 py-3 border-t">
+    <footer className="text-center text-sm text-gray-500 mt-7 py-2 border-t">
   ⚠️ This is a demo project created for educational purposes only. No real waste pickups are scheduled. Please do not submit sensitive information.
 
 </footer>

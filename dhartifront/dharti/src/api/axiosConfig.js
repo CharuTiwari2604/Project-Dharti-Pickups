@@ -1,14 +1,22 @@
 import axios from "axios";
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
-console.log("Using API_URL:", API_URL);
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 const axiosInstance = axios.create({
-  // baseURL: "http://localhost:5000/api",  // ✅ Change to your backend URL
-     baseURL: API_URL,
-  withCredentials: true,                // ✅ Important for cookie-based auth
+  baseURL: API_URL,
+  withCredentials: true,
   headers: {
     "Content-Type": "application/json"
   }
+});
+
+// Attach interceptor **to the axios instance** AFTER creating it
+axiosInstance.interceptors.request.use(config => {
+  if (config.baseURL?.endsWith('/api') && config.url?.startsWith('/api')) {
+    config.url = config.url.replace(/^\/api/, '');
+  }
+  return config;
+}, error => {
+  return Promise.reject(error);
 });
 
 export default axiosInstance;

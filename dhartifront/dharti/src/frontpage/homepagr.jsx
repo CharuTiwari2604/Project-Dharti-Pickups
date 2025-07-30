@@ -20,7 +20,7 @@ export function HomePage() {
   const [showBanner, setShowBanner] = useState(false);
   const [showConfirmLogout, setShowConfirmLogout] = useState(false);
 
-    useEffect(() => {
+  useEffect(() => {
     // Show banner after a delay
     const timer = setTimeout(() => {
       setShowBanner(true);
@@ -30,22 +30,22 @@ export function HomePage() {
   }, []);
 
   useEffect(() => {
-     
-  const checkAuth = async () => {
-    try {
-      await axios.get("/api/user/profile");
-      setIsLoggedIn(true);
-    } catch (err) {
-      if (err.response?.status !== 401) {
-        console.error("Auth error", err);
+
+    const checkAuth = async () => {
+      try {
+        await axios.get("/api/user/profile");
+        setIsLoggedIn(true);
+      } catch (err) {
+        if (err.response?.status !== 401) {
+          console.error("Auth error", err);
+        }
+        setIsLoggedIn(false);
+      } finally {
+        setLoadingAuth(false);
       }
-      setIsLoggedIn(false);
-    } finally {
-      setLoadingAuth(false);
-    }
-  };
-  checkAuth();
-}, []);
+    };
+    checkAuth();
+  }, []);
 
 
   // for loginnew
@@ -73,7 +73,7 @@ export function HomePage() {
     setShowBanner(false);
   };
 
-   if (loadingAuth) {
+  if (loadingAuth) {
     return (
       <div className="loading-screen" style={{ height: '100vh' }}>
         <Spinner />
@@ -86,12 +86,15 @@ export function HomePage() {
       <div className="container h-screen bg-cover bg-center bg-[rgba(1,26,16,0.737)]
             bg-blend-overlay"
         style={{ backgroundImage: `url(${bg})` }}>
-
         <header className="header">
           <div className="headcontent">
-            <img src={logo} alt="logo" className="logo" />
-            <div className="txthead"> Dharti Pickups<br />
-              <span className="tagline">From Waste to Wonder </span>
+            <div className="logo-text-wrap">
+              <img src={logo} alt="logo" className="logo" />
+              <div className="text-container">
+                <div className="txthead"> Dharti Pickups<br />
+                  <span className="tagline">From Waste to Wonder </span>
+                </div>
+              </div>
             </div>
             <nav className="navlinks">
               <Link to="/profile">My Profile</Link>
@@ -110,7 +113,9 @@ export function HomePage() {
               onClose={() => setShowModal(false)}
               onLoginSuccess={() => setIsLoggedIn(true)}
             />
+
           </div>
+
         </header>
         <div className="main">
           Dharti Pickups
@@ -160,30 +165,24 @@ export function HomePage() {
             <p>We transform used materials into innovative, higher value products giving them a new life and purpose.</p>
             <div className="badge">03</div>
           </div>
-
         </div>
-
       </div>
 
       {/* third part */}
-
       <div className="thirdpart">
         <section className="waste-experience">
           <h2>We Have Experience In Handling All Kinds Of Waste!</h2>
-
           <div className="check-grid">
             <div className="cell"><span className="check-icon">✔️</span> Waste Papers</div>
             <div className="cell"><span className="check-icon">✔️</span> Electronic Waste</div>
             <div className="cell highlight"><span className="check-icon">✔️</span> Metallic Waste</div>
-
             <div className="cell"><span className="check-icon">✔️</span> Packaging Plastic</div>
             <div className="cell"><span className="check-icon">✔️</span> Hard Plastic</div>
             <div className="cell"><span className="check-icon">✔️</span> Textile Waste</div>
           </div>
-
           <p className="callout">
             We already made huge strides in our services and sustainability journey by investing in plastic recycling.
-            {/* <a href="#" className="link">Awards And Milestones →</a> */}
+           
           </p>
         </section>
       </div>
@@ -209,7 +208,6 @@ export function HomePage() {
               </div>
             </div>
           </div>
-
           <section className="vision-mission">
             <div className="vm-container">
               <div className="vm-header">

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import "../index.css";
 import axios from "../api/axiosConfig";
 import { useNavigate } from "react-router-dom";
@@ -19,8 +19,9 @@ export function RequestPickup() {
     const apiKey = import.meta.env.VITE_LOCATIONIQ_KEY;
     const navigate = useNavigate();
 
-    const fetchSuggestions = async (query) => {
-        if (!query) {
+    // new
+    const fetchSuggestions = useCallback(async (query) => {
+          if (!query || query.length < 3) { 
             setSuggestions([]);
             return;
         }
@@ -34,11 +35,13 @@ export function RequestPickup() {
             console.error("Error fetching suggestions:", err);
             setSuggestions([]);
         }
-    };
+    }, [apiKey]);
+
       // Debounce the API call so it's triggered only after 500ms of inactivity
   const debouncedFetch = useMemo(
     () => debounce(fetchSuggestions, 500),
-    [fetchSuggestions]
+    // [fetchSuggestions]
+     [fetchSuggestions]
   );
 
   useEffect(() => {
@@ -49,7 +52,6 @@ export function RequestPickup() {
     const handleLocationChange = (e) => {
         const value = e.target.value;
         setLocationInput(value);
-        // fetchSuggestions(value);
   debouncedFetch(value); // 👈 correct: uses debounce
     };
 
@@ -72,15 +74,10 @@ export function RequestPickup() {
 
         try {
             setLoading(true);
-            const res = await axios.post(
-                // "https://project-dharti-pickups.onrender.com/api/requestpickup/request",
-                
-                "/api/requestpickup/request",
+            const res = await axios.post( "/api/requestpickup/request",
                 formData,
                 {
-                    // withCredentials: true,
                     headers: {
-                        // Content-Type is automatically set by Axios for FormData
                     },
                 }
             );

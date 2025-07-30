@@ -11,6 +11,7 @@ export function AboutUs() {
     return (
         <div className="aboutus">
             <div className="box1">
+                
                 <div className="first">
                     <div className="one">
                         <img src={one} className="image" />
