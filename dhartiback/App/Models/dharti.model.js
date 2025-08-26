@@ -1,33 +1,3 @@
-// let mongoose=require('mongoose')
-// let Schema=mongoose.Schema;
-// let EnquireSchema =new Schema({
-//     location:{
-//         type:String,
-//         required:true
-//     },
-//     type:{
-//         type:String,
-//         enum: ['Plastic', 'Paper', 'Metal', 'Electronics'],
-//         required:true,
-//     },
-//     weight:{
-//         type:String,
-//         required:true
-//     },
-//     date:{
-//         type:Date,
-//         required:true
-//     },
-//     image:{
-//         type:String,
-//         required:false
-//     }
-// })
-// let dhartiModel=mongoose.model('Request', EnquireSchema)
-// module.exports=dhartiModel
-
-
-//revised
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 

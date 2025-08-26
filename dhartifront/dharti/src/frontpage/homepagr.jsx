@@ -58,9 +58,6 @@ export function HomePage() {
 
   const handleLogout = async () => {
     try {
-      // await axios.post("https://project-dharti-pickups.onrender.com/api/user/logout", {}, {
-      //   withCredentials: true,
-      // });
       await axios.post("/api/user/logout");
     } catch (err) {
       console.error("Logout failed", err);
@@ -126,7 +123,7 @@ export function HomePage() {
       {showBanner && (
         <div className="fixed bottom-0 left-0 w-full bg-black/60 text-white border-t border-gray-300 shadow-md px-4 py-7 text-center z-[9999]">
           <span>
-            ⚠️ This is a demo project for educational use only. No real pickups are scheduled. Please do not submit sensitive information.
+            ⚠️ This is a demo project for educational use only. No real pickups are scheduled. Please do not submit sensitive information. For Testing use Email Id= "rudra@gmail.com" and Password= "rudra"
           </span>
           <button
             className="absolute top-2 right-4 text-white hover:text-gray-800 text-sm"

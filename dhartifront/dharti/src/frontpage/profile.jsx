@@ -129,24 +129,11 @@ const ProfilePage = () => {
     <div className="profilepage">
       {/* Ecopoints */}
       <div className="head2">My Profile</div>
-      {/* <div className="bg-white shadow-md rounded-2xl p-6 mt-0"> */}
-      {/* <div className="ecobox fixed top-4 right-4 bg-white shadow-lg p-4 rounded-md w-40 sm:w-48">
-        <h2 className="text-lg sm:text-xl font-bold mb-1">Ecopoints Earned</h2>
-        <p className="text-2xl sm:text-3xl font-bold text-green-600">{ecopoints} 🌱</p>
-        <p className="text-xs sm:text-sm text-gray-500 mt-1">{getLevel(ecopoints)}</p>
-      </div> */}
       <div className="ecobox p-3 rounded-lg shadow-lg bg-white text-center absolute right-4 top-4 sm:relative sm:top-0 sm:right-0 sm:mx-auto sm:mt-4 sm:w-auto">
   <h2 className="text-base sm:text-xl font-semibold mb-1">Ecopoints Earned</h2>
   <p className="text-2xl sm:text-4xl font-bold text-green-600">{ecopoints} 🌱</p>
   <p className="text-xs sm:text-sm text-gray-500 mt-1">{getLevel(ecopoints)}</p>
 </div>
-
-
-      {/* <div className="ecobox">
-        <h2 className="text-2xl font-bold mb-2">Ecopoints Earned</h2>
-        <p className="text-4xl font-bold text-green-600">{ecopoints} 🌱 </p>
-        <p className="text-sm text-gray-500 mt-1">{getLevel(ecopoints)}</p>
-      </div> */}
 
       <img className="avatar" src={avatar} alt="avatar" width="100" style={{ borderRadius: "50%" }} />
       <div className="profileinfo">
