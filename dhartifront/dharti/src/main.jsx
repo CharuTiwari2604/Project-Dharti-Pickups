@@ -6,14 +6,14 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import axios from './api/axiosConfig';
 
-import { AuthProvider } from './frontpage/AuthContext';
+// import { AuthProvider } from './frontpage/AuthContext';
 
 ReactDOM.createRoot(
   document.getElementById('root')
 ).render(
   <BrowserRouter>
-  <AuthProvider> 
+  {/* <AuthProvider>  */}
     <App />
-     </AuthProvider>
+     {/* </AuthProvider> */}
   </BrowserRouter>
 );

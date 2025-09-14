@@ -15,8 +15,6 @@ const getLevel = (points) => {
 };
 
 const ProfilePage = () => {
-  // const [user, setUser] = useState({});
-
   const [user, setUser] = useState(null);
   const [pickups, setPickups] = useState([]);
   const [ecopoints, setEcopoints] = useState(0);
@@ -38,10 +36,7 @@ const ProfilePage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Profile
-        const res = await axios.get("/api/user/profile"
-          // ,{ withCredentials: true }
-        );
+        const res = await axios.get("/api/user/profile");
         const data = res.data;
         setUser(data);
         setPickups(data.pickups || []);
@@ -56,12 +51,10 @@ const ProfilePage = () => {
 
         // Ecopoints
         const pointsRes = await axios.get("/api/user/ecopoints")
-        // , { withCredentials: true });
         setEcopoints(pointsRes.data.ecopoints);
 
         // Leaderboard
         const leaderboardRes = await axios.get("/api/leaderboard")
-        // , { withCredentials: true });
         setLeaderboard(leaderboardRes.data);
 
       } catch (err) {
@@ -70,7 +63,7 @@ const ProfilePage = () => {
       }
       // extra 
       finally {
-        setLoadingAuth(false); // ✅ Ensure it always stops loading
+        setLoadingAuth(false); // Ensure it always stops loading
       }
     };
 
@@ -81,7 +74,6 @@ const ProfilePage = () => {
     e.preventDefault();
     try {
       await axios.put("/api/user/profile", { username: editForm.name }),
-        //  { withCredentials: true });
         setUser((prev) => ({ ...prev, name: editForm.name }));
       setShowEditModal(false);
     } catch (err) {
@@ -93,7 +85,6 @@ const ProfilePage = () => {
     e.preventDefault();
     try {
       await axios.put("/api/user/profile", profileForm)
-      // , { withCredentials: true });
       setUser((prev) => ({ ...prev, ...profileForm }));
       setProfileComplete(true);
       setShowSetupModal(false);
@@ -253,7 +244,8 @@ const ProfilePage = () => {
                   <span className={`px-3 py-1 rounded-full text-sm font-medium ${entry.ecoPoints >= 1000 ? 'bg-purple-100 text-purple-700'
                     : entry.ecoPoints >= 500 ? 'bg-yellow-100 text-yellow-700'
                       : 'bg-gray-100 text-gray-700'
-                    }`}>
+                     }`}>        
+                                  {/* ≥1000=purple badge, ≥500=yellow badge, otherwise=gray badge */}
                     {getLevel(entry.ecoPoints)}
                   </span>
                 </td>
@@ -267,3 +259,5 @@ const ProfilePage = () => {
 };
 
 export default ProfilePage;
+
+

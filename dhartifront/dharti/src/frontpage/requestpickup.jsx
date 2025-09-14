@@ -3,7 +3,7 @@ import "../index.css";
 import axios from "../api/axiosConfig";
 import { useNavigate } from "react-router-dom";
 import bgreq from '../assets/bgreqpickup.jpg';
-import debounce from 'lodash.debounce';
+import debounce from 'lodash.debounce';       //function wait for a pause before running, decrease requests in location iq api
 
 export function RequestPickup() {
     const [location, setLocation] = useState("");
@@ -20,54 +20,53 @@ export function RequestPickup() {
     const navigate = useNavigate();
 
     // new
-    const fetchSuggestions = useCallback(async (query) => {
-          if (!query || query.length < 3) { 
-            setSuggestions([]);
+    const fetchSuggestions = useCallback(async (query) => {   //query=what user typed in and useCallback =function is only recreated if apiKey changes
+          if (!query || query.length < 3) {     //if query is empty or less than 3 characters, don’t call the API
+            setSuggestions([]);  //Clear previous suggestions and stop the function
             return;
         }
         try {
             const res = await fetch(
                 `https://api.locationiq.com/v1/autocomplete?key=${apiKey}&q=${query}&format=json`
             );
-            const data = await res.json();
-            setSuggestions(data);
+            const data = await res.json();       //Convert response to JSON,store it in data
+            setSuggestions(data);        //show suggestions in UI
         } catch (err) {
             console.error("Error fetching suggestions:", err);
             setSuggestions([]);
         }
     }, [apiKey]);
 
-      // Debounce the API call so it's triggered only after 500ms of inactivity
-  const debouncedFetch = useMemo(
-    () => debounce(fetchSuggestions, 500),
-    // [fetchSuggestions]
+      
+  const debouncedFetch = useMemo(   //usememo=function doesn’t get recreated on every render
+    () => debounce(fetchSuggestions, 500),  // wait to 500ms after user stops typing before fetching suggestions
      [fetchSuggestions]
   );
 
   useEffect(() => {
-    return () => debouncedFetch.cancel(); // Cleanup on unmount
+    return () => debouncedFetch.cancel(); // Cleanup on unmount and stop pending API calls
   }, [debouncedFetch]);
 
 
     const handleLocationChange = (e) => {
         const value = e.target.value;
         setLocationInput(value);
-  debouncedFetch(value); // 👈 correct: uses debounce
+  debouncedFetch(value); // correct: uses debounce
     };
 
     const handleSuggestionClick = (place) => {
         const address = place.display_place || place.display_name;
-        setLocationInput(address);
+        setLocationInput(address);   // Show chosen value in input
         setLocation(address);  // Set correct backend location
-        setSuggestions([]);
+        setSuggestions([]);     // Clear dropdown suggestions
     };
 
     const saveRequest = async (e) => {
         e.preventDefault();
 
-        const formData = new FormData();
+        const formData = new FormData();      //FormData-special object to send files + text data via HTTP request,necessary to send images
         formData.append("location", location);
-        formData.append("type", type);
+        formData.append("type", type);       //append adds each field to the request
         formData.append("weight", weight);
         formData.append("date", date);
         if (image) formData.append("image", image);
@@ -75,7 +74,7 @@ export function RequestPickup() {
         try {
             setLoading(true);
             const res = await axios.post( "/api/requestpickup/request",
-                formData,
+                formData,      //send data in the request body
                 {
                     headers: {
                     },
@@ -162,8 +161,9 @@ export function RequestPickup() {
                             />
                         </div>
                     </div>
-
                     <div>
+
+                       {/* for="email" in html but in react for is a reserved keyword hence htmlFor */}
                         <label className="label2" htmlFor="date">Preferred Pickup Date</label>
                         <input
                             className="waste"

@@ -4,14 +4,13 @@ import '../index.css';
 
   const SignIn = ({ isOpen, onClose, onLoginSuccess }) => {
   const [activeTab, setActiveTab] = useState('login');
-
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  if (!isOpen) return null;
-
+  if (!isOpen) return null;        //shows nothing if model not open
+ 
   const resetFields = () => {
     setName('');
     setEmail('');
@@ -20,7 +19,7 @@ import '../index.css';
 
 
   const handleLogin = async (e) => {
-    e.preventDefault();
+    e.preventDefault();          //stops page from refreshing when submit the form
     if (!email || !password) {
       alert('Email and password are required');
       return;
@@ -29,10 +28,8 @@ import '../index.css';
     try {
       setLoading(true);
       const res = await axios.post(
-        // 'https://project-dharti-pickups.onrender.com/api/login',
         '/api/login',
-        { email, password },
-        // { withCredentials: true }
+        { email, password },         //send email, password in request body
       );
 
       alert('Login Successful');
@@ -43,7 +40,7 @@ import '../index.css';
       console.error('Login failed:', err.response?.data || err.message);
       alert('Login failed: ' + (err.response?.data?.message || err.message));
     } finally {
-      setLoading(false);
+      setLoading(false);     //success or fail, turn loading off
     }
   };
 
@@ -58,10 +55,8 @@ import '../index.css';
     try {
       setLoading(true);
       const res = await axios.post(
-        // 'https://project-dharti-pickups.onrender.com/api/register',
         '/api/register',
         { name, email, password },
-        // { withCredentials: true }
       );
 
       alert('Sign In Successful');

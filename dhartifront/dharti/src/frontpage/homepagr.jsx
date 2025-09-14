@@ -3,7 +3,7 @@ import '../index.css';
 import logo from '../assets/logooo.png';
 import bg from '../assets/bg.jpg';
 import { Link } from "react-router-dom";
-import Spinner from "./Spinner";
+// import Spinner from "./Spinner";
 import SignIn from './signin';
 import axios from "../api/axiosConfig";
 import box1 from '../assets/box1.jpg';
@@ -15,7 +15,7 @@ import logo2 from '../assets/visionfinal.png';
 
 export function HomePage() {
   const [showModal, setShowModal] = useState(false);
-  const [loadingAuth, setLoadingAuth] = useState(true); //extra
+  const [loadingAuth, setLoadingAuth] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showBanner, setShowBanner] = useState(false);
   const [showConfirmLogout, setShowConfirmLogout] = useState(false);
@@ -41,7 +41,7 @@ export function HomePage() {
         }
         setIsLoggedIn(false);
       } finally {
-        setLoadingAuth(false);
+        setLoadingAuth(false);      //stop showing the loading spinner
       }
     };
     checkAuth();
@@ -49,8 +49,8 @@ export function HomePage() {
 
 
   // for loginnew
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
+  useEffect(() => { 
+    const params = new URLSearchParams(window.location.search);          //window.location.search → everything after ? and new URLSearchParams() makes it easier to read values from that query
     if (params.get("login") === "true") {
       setShowModal(true);
     }
@@ -70,13 +70,13 @@ export function HomePage() {
     setShowBanner(false);
   };
 
-  if (loadingAuth) {
-    return (
-      <div className="loading-screen" style={{ height: '100vh' }}>
-        <Spinner />
-      </div>
-    );
-  }
+  // if (loadingAuth) {
+  //   return (
+  //     <div className="loading-screen" style={{ height: '100vh' }}>
+  //       <Spinner />
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="homepage">
@@ -130,7 +130,7 @@ export function HomePage() {
             onClick={handleClose}
             aria-label="Close Disclaimer"
           >
-            &times;
+           &times;          {/*  close button in html  and  &amp; is & in html*/}
           </button>
         </div>
       )}
