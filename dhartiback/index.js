@@ -1,9 +1,8 @@
-require('dotenv').config();
+require('dotenv').config();    //loads hidden secrets from .env
 const express = require('express');
 const cors = require('cors');
-const mongoose = require('mongoose');
-const cookieParser = require('cookie-parser');
-const session = require('express-session');
+const mongoose = require('mongoose');   //connects to mongodb
+const cookieParser = require('cookie-parser');   //read/write cookies
 
 const authRouter = require('./App/Routes/web/authroutes');
 const leadRouter = require('./App/Routes/web/leaderboardroutes');
@@ -27,34 +26,17 @@ app.use(cors({
       callback(new Error("CORS block:" +origin));
     }
   },
-  credentials: true,
+  credentials: true,     //allows cookies/JWT to be sent along with requests.
 }));
 
-// app.options('*', cors());
-app.use(cookieParser());
-
-// Session setup
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',  // true in prod (HTTPS)
-    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-    // maxAge: 24 * 60 * 60 * 1000,
-    maxAge: 86400000, //1day
-  },
-}));
-
+app.use(cookieParser());    //added this middleware
 
 //parsing
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json());   //lets server read JSON data sent by frontend
+app.use(express.urlencoded({ extended: true }));  //lets server read form data (name=value&age=20)
 
 //routes
 app.use('/api', authRouter);
-app.use('/api/leaderboard', leadRouter);
 app.use('/api/user', userRoutes);
 app.use('/api/requestpickup', requestPickupRoutes);
 
@@ -64,13 +46,6 @@ app.use('/api', require('./App/Routes/web/leaderboardroutes'));
 
 
 //error handler
-// app.use((err, req, res, next) => {
-//   console.error('Error:', err);
-//   if (err.name === 'MulterError') {
-//     return res.status(400).json({ message: err.message });
-//   }
-//   res.status(500).json({ message: 'Internal server error' });
-// });
 app.use((err, req, res, next) => {
   console.error('Global error:', err);
   if (res.headersSent) return next(err);

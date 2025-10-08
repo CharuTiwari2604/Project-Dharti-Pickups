@@ -1,11 +1,10 @@
 const jwt = require("jsonwebtoken");
 const User = require("../../Models/user"); 
 const bcrypt = require("bcrypt");
-// const PickupRequest = require("../../Models/getprofile");
 const mongoose = require('mongoose');
 const Pickup = require("../../Models/pickupmodel");
 
-// ✅ LOGIN
+//  LOGIN
 exports.loginUser = async (req, res) => {
   const { email, password } = req.body;
 
@@ -24,9 +23,7 @@ exports.loginUser = async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      // secure: false,            // ✅ true if HTTPS
       secure: true,
-      // sameSite: "Lax",
       sameSite: "None",
       maxAge: 7 * 24 * 60 * 60 * 1000
     });
@@ -45,7 +42,7 @@ exports.loginUser = async (req, res) => {
   }
 };
 
-// ✅ GET USER PROFILE
+//  GET USER PROFILE
 exports.getUserProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select("-password");
@@ -70,7 +67,7 @@ exports.getUserProfile = async (req, res) => {
   }
 };
 
-// ✅ UPDATE ONLY location, phone, bio
+// UPDATE ONLY location, phone, bio
 exports.updateUserProfile = async (req, res) => {
   try {
     const { location, phone, bio } = req.body;
