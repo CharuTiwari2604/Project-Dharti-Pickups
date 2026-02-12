@@ -9,7 +9,7 @@ import '../index.css';
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  if (!isOpen) return null;        //shows nothing if model not open
+  if (!isOpen) return null;   
  
   const resetFields = () => {
     setName('');
@@ -19,7 +19,7 @@ import '../index.css';
 
 
   const handleLogin = async (e) => {
-    e.preventDefault();          //stops page from refreshing when submit the form
+    e.preventDefault();      
     if (!email || !password) {
       alert('Email and password are required');
       return;
@@ -29,7 +29,7 @@ import '../index.css';
       setLoading(true);
       const res = await axios.post(
         '/api/login',
-        { email, password },         //send email, password in request body
+        { email, password },   
       );
 
       alert('Login Successful');
@@ -40,7 +40,7 @@ import '../index.css';
       console.error('Login failed:', err.response?.data || err.message);
       alert('Login failed: ' + (err.response?.data?.message || err.message));
     } finally {
-      setLoading(false);     //success or fail, turn loading off
+      setLoading(false);  
     }
   };
 
@@ -81,8 +81,7 @@ import '../index.css';
               onClick={() => {
                 setActiveTab('login');
                 resetFields();
-              }}
-            >
+              }}>
               Log In
             </button>
             <button
@@ -90,8 +89,7 @@ import '../index.css';
               onClick={() => {
                 setActiveTab('register');
                 resetFields();
-              }}
-            >
+              }}>
               Sign In
             </button>
             <span className="closebtn" onClick={onClose}>
@@ -101,47 +99,17 @@ import '../index.css';
 
           {activeTab === 'login' ? (
             <form className="form" onSubmit={handleLogin}>
-              <input
-                type="email"
-                placeholder="Email Id"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-              <input
-                type="password"
-                placeholder="Enter Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
+              <input type="email" placeholder="Email Id" value={email} onChange={(e) => setEmail(e.target.value)} required/>
+              <input type="password" placeholder="Enter Password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
               <button className="loginbtn" type="submit" disabled={loading}>
                 {loading ? 'Logging in...' : 'Log In'}
               </button>
             </form>
           ) : (
             <form className="form" onSubmit={handleRegister}>
-              <input
-                type="text"
-                placeholder="User Name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-              />
-              <input
-                type="email"
-                placeholder="Email Id"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-              <input
-                type="password"
-                placeholder="Create Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
+              <input type="text" placeholder="User Name" value={name} onChange={(e) => setName(e.target.value)} required/>
+              <input type="email" placeholder="Email Id" value={email}  onChange={(e) => setEmail(e.target.value)} required/>
+              <input  type="password" placeholder="Create Password" value={password} onChange={(e) => setPassword(e.target.value)}  required/>
               <button className="signinbtn" type="submit" disabled={loading}>
                 {loading ? 'Signing up...' : 'Sign In'}
               </button>

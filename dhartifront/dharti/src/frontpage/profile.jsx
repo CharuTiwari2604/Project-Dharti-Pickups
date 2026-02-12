@@ -63,7 +63,7 @@ const ProfilePage = () => {
       }
       // extra 
       finally {
-        setLoadingAuth(false); // Ensure it always stops loading
+        setLoadingAuth(false);
       }
     };
 
@@ -118,6 +118,7 @@ const ProfilePage = () => {
 
   return (
     <div className="profilepage">
+      
       {/* Ecopoints */}
       <div className="head2">My Profile</div>
       <div className="ecobox p-3 rounded-lg shadow-lg bg-white text-center absolute right-4 top-4 sm:relative sm:top-0 sm:right-0 sm:mx-auto sm:mt-4 sm:w-auto">

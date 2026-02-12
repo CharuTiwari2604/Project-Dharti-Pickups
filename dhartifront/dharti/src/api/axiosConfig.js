@@ -9,7 +9,6 @@ const axiosInstance = axios.create({
   }
 });
 
-// Attach interceptor **to the axios instance** AFTER creating it
 axiosInstance.interceptors.request.use(config => {
   if (config.baseURL?.endsWith('/api') && config.url?.startsWith('/api')) {
     config.url = config.url.replace(/^\/api/, '');

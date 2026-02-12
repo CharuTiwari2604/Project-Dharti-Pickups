@@ -1,8 +1,8 @@
-require('dotenv').config();    //loads hidden secrets from .env
+require('dotenv').config();    
 const express = require('express');
 const cors = require('cors');
-const mongoose = require('mongoose');   //connects to mongodb
-const cookieParser = require('cookie-parser');   //read/write cookies
+const mongoose = require('mongoose'); 
+const cookieParser = require('cookie-parser');   
 
 const authRouter = require('./App/Routes/web/authroutes');
 const leadRouter = require('./App/Routes/web/leaderboardroutes');
@@ -10,7 +10,7 @@ const userRoutes = require('./App/Routes/web/userroutes');
 const requestPickupRoutes = require('./App/Routes/web/requestpickuproutes');
 
 const app = express();
-app.set('trust proxy', 1); // For proper cookie handling behind proxies
+app.set('trust proxy', 1); 
 
 const allowedOrigins = [
   'https://project-dharti-pickups-mpu6.vercel.app',
@@ -26,14 +26,14 @@ app.use(cors({
       callback(new Error("CORS block:" +origin));
     }
   },
-  credentials: true,     //allows cookies/JWT to be sent along with requests.
+  credentials: true,     
 }));
 
-app.use(cookieParser());    //added this middleware
+app.use(cookieParser());    
 
 //parsing
-app.use(express.json());   //lets server read JSON data sent by frontend
-app.use(express.urlencoded({ extended: true }));  //lets server read form data (name=value&age=20)
+app.use(express.json());   
+app.use(express.urlencoded({ extended: true })); 
 
 //routes
 app.use('/api', authRouter);
@@ -56,7 +56,6 @@ app.use((err, req, res, next) => {
 });
 
 
-// mongoose.connect(process.env.DBURL)
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,

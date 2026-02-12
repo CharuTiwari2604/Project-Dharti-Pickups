@@ -4,7 +4,6 @@ const bcrypt = require("bcrypt");
 const mongoose = require('mongoose');
 const Pickup = require("../../Models/pickupmodel");
 
-//  LOGIN
 exports.loginUser = async (req, res) => {
   const { email, password } = req.body;
 
@@ -42,15 +41,12 @@ exports.loginUser = async (req, res) => {
   }
 };
 
-//  GET USER PROFILE
 exports.getUserProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select("-password");
     if (!user) return res.status(404).json({ message: "User not found" });
 
     const pickups = await Pickup.find({ user: req.user.id }).sort({ createdAt: -1 });
-
-    console.log('📦 User profile pickups:', pickups.length);
 
     res.status(200).json({
       id: user._id,
@@ -67,7 +63,6 @@ exports.getUserProfile = async (req, res) => {
   }
 };
 
-// UPDATE ONLY location, phone, bio
 exports.updateUserProfile = async (req, res) => {
   try {
     const { location, phone, bio } = req.body;
@@ -75,7 +70,6 @@ exports.updateUserProfile = async (req, res) => {
     const user = await User.findById(req.user.id);
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    // Only update location, phone, bio
     if (location !== undefined) user.location = location;
     if (phone !== undefined) user.phone = phone;
     if (bio !== undefined) user.bio = bio;
@@ -89,7 +83,6 @@ exports.updateUserProfile = async (req, res) => {
   }
 };
 
-// points
 exports.getEcopoints = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -108,7 +101,6 @@ exports.getEcopoints = async (req, res) => {
   }
 };
 
-//leaderboard
 exports.getLeaderboard = async (req, res) => {
   try {
     const leaderboard = await Pickup.aggregate([

@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express.Router();    //mini express app for routes
+const router = express.Router();   
 const authToken = require('../../middleware/authMiddleware'); 
 const { getUserProfile, updateUserProfile, getEcopoints, getLeaderboard,  } = require('../../Controller/web/userController');
 const { loginUser } = require('../../Controller/web/authController');
@@ -12,7 +12,7 @@ router.post("/logout", (req, res) => {
   res.status(200).json({ message: "Logged out successfully" });
 });
 
-router.get('/ecopoints', authToken, getEcopoints);    // points
-router.get('/leaderboard', getLeaderboard);    // Leaderboard endpoint
+router.get('/ecopoints', authToken, getEcopoints);    
+router.get('/leaderboard', getLeaderboard);  
 
 module.exports = router;

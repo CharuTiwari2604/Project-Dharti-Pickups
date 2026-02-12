@@ -13,7 +13,7 @@ ecoPoints: {
 },
   pickups: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Pickup' }],
 }, {
-  timestamps: true // Automatically adds createdAt and updatedAt
+  timestamps: true 
 });
 
 const User=mongoose.model('User', userSchema);

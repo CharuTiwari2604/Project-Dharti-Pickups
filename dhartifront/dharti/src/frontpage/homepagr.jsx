@@ -3,7 +3,6 @@ import '../index.css';
 import logo from '../assets/logooo.png';
 import bg from '../assets/bg.jpg';
 import { Link } from "react-router-dom";
-// import Spinner from "./Spinner";
 import SignIn from './signin';
 import axios from "../api/axiosConfig";
 import box1 from '../assets/box1.jpg';
@@ -21,10 +20,9 @@ export function HomePage() {
   const [showConfirmLogout, setShowConfirmLogout] = useState(false);
 
   useEffect(() => {
-    // Show banner after a delay
     const timer = setTimeout(() => {
       setShowBanner(true);
-    }, 500); // Delay in ms
+    }, 500); 
 
     return () => clearTimeout(timer);
   }, []);
@@ -41,16 +39,15 @@ export function HomePage() {
         }
         setIsLoggedIn(false);
       } finally {
-        setLoadingAuth(false);      //stop showing the loading spinner
+        setLoadingAuth(false);    
       }
     };
     checkAuth();
   }, []);
 
 
-  // for loginnew
   useEffect(() => { 
-    const params = new URLSearchParams(window.location.search);          //window.location.search → everything after ? and new URLSearchParams() makes it easier to read values from that query
+    const params = new URLSearchParams(window.location.search);       
     if (params.get("login") === "true") {
       setShowModal(true);
     }
@@ -65,18 +62,11 @@ export function HomePage() {
     setIsLoggedIn(false);
     alert("Logged out successfully.");
   };
-  // banner
+ 
   const handleClose = () => {
     setShowBanner(false);
   };
 
-  // if (loadingAuth) {
-  //   return (
-  //     <div className="loading-screen" style={{ height: '100vh' }}>
-  //       <Spinner />
-  //     </div>
-  //   );
-  // }
 
   return (
     <div className="homepage">
@@ -130,7 +120,7 @@ export function HomePage() {
             onClick={handleClose}
             aria-label="Close Disclaimer"
           >
-           &times;          {/*  close button in html  and  &amp; is & in html*/}
+           &times;        
           </button>
         </div>
       )}

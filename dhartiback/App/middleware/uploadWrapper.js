@@ -1,6 +1,5 @@
-// middleware/uploadWrapper.js
 const multer = require('multer');
-const upload = require('../config/multercloudinary'); // Adjust path if needed
+const upload = require('../config/multercloudinary');
 
 module.exports = (req, res, next) => {
   upload.single('image')(req, res, err => {
@@ -12,6 +11,6 @@ module.exports = (req, res, next) => {
       console.error('Unknown upload error:', err);
       return res.status(500).json({ message: 'Failed to upload image' });
     }
-    next(); // proceed if no error
+    next(); 
   });
 };
