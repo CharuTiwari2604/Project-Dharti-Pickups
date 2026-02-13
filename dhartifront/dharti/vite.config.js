@@ -1,13 +1,13 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import tailwindcss from "@tailwindcss/vite"; // ✅ Add this plugin
+import tailwindcss from "@tailwindcss/vite"; 
 
 export default defineConfig({
   plugins: [
     react(),
-    tailwindcss(), // ✅ Make sure this is included
+    tailwindcss(),
   ],
-  base: "./", // Optional: supports relative asset paths
+  base: "./", 
   build: {
     outDir: "dist",
   },

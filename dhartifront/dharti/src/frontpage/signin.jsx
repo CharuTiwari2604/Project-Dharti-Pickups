@@ -28,7 +28,7 @@ import '../index.css';
     try {
       setLoading(true);
       const res = await axios.post(
-        '/api/login',
+        '/login',
         { email, password },   
       );
 
@@ -55,7 +55,7 @@ import '../index.css';
     try {
       setLoading(true);
       const res = await axios.post(
-        '/api/register',
+        '/register',
         { name, email, password },
       );
 
@@ -73,44 +73,42 @@ import '../index.css';
 
   return (
     <div className="signin">
-      <div className="over">
-        <div className="authmodal">
+      <div className="over fixed inset-0 w-full h-full bg-black/60 flex items-center justify-center z-[999]">
+        <div className="authmodal bg-black/60 p-12 rounded-[20px] w-[400px] h-[480px] shadow-[0_0_20px_rgba(255,255,255,0.1)] relative animate-[slideIn_0.3s_ease]">
           <div className="header">
-            <button
-              className={activeTab === 'login' ? 'active' : ''}
+            <button  className={activeTab === 'login' ? 'active' : ''} 
               onClick={() => {
                 setActiveTab('login');
                 resetFields();
               }}>
               Log In
             </button>
-            <button
-              className={activeTab === 'register' ? 'active' : ''}
+            <button  className={activeTab === 'register' ? 'active' : ''}
               onClick={() => {
                 setActiveTab('register');
                 resetFields();
               }}>
               Sign In
             </button>
-            <span className="closebtn" onClick={onClose}>
+            <span className="closebtn absolute -right-2 -top-2 bg-[#ff4444] text-white rounded-full px-2.5 py-1 cursor-pointer" onClick={onClose}>
               X
             </span>
           </div>
 
           {activeTab === 'login' ? (
-            <form className="form" onSubmit={handleLogin}>
+            <form className="form flex flex-col gap-3" onSubmit={handleLogin}>
               <input type="email" placeholder="Email Id" value={email} onChange={(e) => setEmail(e.target.value)} required/>
               <input type="password" placeholder="Enter Password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
-              <button className="loginbtn" type="submit" disabled={loading}>
+              <button className="loginbtn mt-10" type="submit" disabled={loading}>
                 {loading ? 'Logging in...' : 'Log In'}
               </button>
             </form>
           ) : (
-            <form className="form" onSubmit={handleRegister}>
+            <form className="form flex flex-col gap-3" onSubmit={handleRegister}>
               <input type="text" placeholder="User Name" value={name} onChange={(e) => setName(e.target.value)} required/>
               <input type="email" placeholder="Email Id" value={email}  onChange={(e) => setEmail(e.target.value)} required/>
               <input  type="password" placeholder="Create Password" value={password} onChange={(e) => setPassword(e.target.value)}  required/>
-              <button className="signinbtn" type="submit" disabled={loading}>
+              <button className="signinbtn mt-5 " type="submit" disabled={loading}>
                 {loading ? 'Signing up...' : 'Sign In'}
               </button>
             </form>

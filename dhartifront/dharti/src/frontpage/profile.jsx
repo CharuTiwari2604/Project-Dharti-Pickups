@@ -36,32 +36,32 @@ const ProfilePage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get("/api/user/profile");
-        const data = res.data;
-        setUser(data);
-        setPickups(data.pickups || []);
-        setEditForm({ name: data.name });
-        setProfileForm({
-          location: data.location || "",
-          phone: data.phone || "",
-          bio: data.bio || "",
-        });
-        setProfileComplete(!!(data.location && data.phone && data.bio));
+        const res = await axios.get("/user/profile");
+        setUser(res.data);
+        setPickups(res.data.pickups || []);
         setIsAuthenticated(true);
+         setEditForm({ name: res.data.name });
+        setProfileForm({
+          location: res.data.location || "",
+          phone:res. data.phone || "",
+          bio: res.data.bio || "",
+        });
+        setProfileComplete(!!(res.data.location && res.data.phone && res.data.bio));
+        
 
         // Ecopoints
-        const pointsRes = await axios.get("/api/user/ecopoints")
-        setEcopoints(pointsRes.data.ecopoints);
+        const pointsRes = await axios.get("/user/ecopoints")
+        setEcopoints(pointsRes.data.ecoPoints);
 
         // Leaderboard
-        const leaderboardRes = await axios.get("/api/leaderboard")
-        setLeaderboard(leaderboardRes.data);
+        const leaderboardRes = await axios.get("/user/leaderboard")
+        const leaderboardData=leaderboardRes.data.leaderboard || leaderboardRes.data;
+        setLeaderboard(Array.isArray(leaderboardData) ? leaderboardData : []);
 
       } catch (err) {
         console.error("Error fetching profile:", err);
         setIsAuthenticated(false);
       }
-      // extra 
       finally {
         setLoadingAuth(false);
       }
@@ -73,7 +73,7 @@ const ProfilePage = () => {
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put("/api/user/profile", { username: editForm.name }),
+      await axios.put("/user/profile", {name: editForm.name }),
         setUser((prev) => ({ ...prev, name: editForm.name }));
       setShowEditModal(false);
     } catch (err) {
@@ -84,7 +84,7 @@ const ProfilePage = () => {
   const handleSetupSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put("/api/user/profile", profileForm)
+      await axios.put("/user/profile", profileForm)
       setUser((prev) => ({ ...prev, ...profileForm }));
       setProfileComplete(true);
       setShowSetupModal(false);
@@ -104,12 +104,12 @@ const ProfilePage = () => {
 
   if (!isAuthenticated) {
     return (
-      <div className="not-logged-in">
-        <div className="not-logged-in-card">
-          <h2>You're not logged in</h2>
-          <p>Please log in to view and manage your profile.</p>
+      <div className="not-logged-in flex justify-center items-center h-screen bg-[#f5f5f5] px-4">
+        <div className="not-logged-in-card bg-white py-8 px-6 md:px-12 rounded-[16px] shadow-[0_0_15px_rgba(0,0,0,0.1)] text-center w-full max-w-[600px] transition-all">
+          <h2 className="mb-4 text-[#333] text-[24px] md:text-[32px] leading-tight">You're not logged in</h2>
+          <p className="text-[#666] mb-8 mt-4 md:mt-[30px] text-[16px] md:text-[20px]">Please log in to view and manage your profile.</p>
           <Link to="/?login=true">
-            <button className="go-login-btn">Go to Login</button>
+            <button className="go-login-btn bg-[#4caf50] text-white px-6 md:px-[1.2rem] py-2 md:py-[0.6rem] rounded-[8px] cursor-pointer text-[1rem] transition-colors duration-200 ease-linear hover:bg-[#388e3c]">Go to Login</button>
           </Link>
         </div>
       </div>
@@ -117,18 +117,18 @@ const ProfilePage = () => {
   }
 
   return (
-    <div className="profilepage">
+    <div className="profilepage relative block bg-[#e6eedd] p-8 pb-[100px]">
       
       {/* Ecopoints */}
-      <div className="head2">My Profile</div>
-      <div className="ecobox p-3 rounded-lg shadow-lg bg-white text-center absolute right-4 top-4 sm:relative sm:top-0 sm:right-0 sm:mx-auto sm:mt-4 sm:w-auto">
+      <div className="head2 text-[#0c3a1d] text-[45px] font-[700] relative text-center mt-[6px] underline">My Profile</div>
+      <div className="ecobox p-3 rounded-lg shadow-lg bg-white text-center absolute right-4 top-4 sm:relative sm:top-0 sm:right-0 sm:mx-auto sm:mt-4 sm:w-auto  ">
   <h2 className="text-base sm:text-xl font-semibold mb-1">Ecopoints Earned</h2>
   <p className="text-2xl sm:text-4xl font-bold text-green-600">{ecopoints} 🌱</p>
   <p className="text-xs sm:text-sm text-gray-500 mt-1">{getLevel(ecopoints)}</p>
 </div>
 
-      <img className="avatar" src={avatar} alt="avatar" width="100" style={{ borderRadius: "50%" }} />
-      <div className="profileinfo">
+      <img className="avatar h-[370px] w-auto object-cover border-[4px] border-[#0d4f25] ml-[30px]" src={avatar} alt="avatar" width="100" style={{ borderRadius: "50%" }} />
+      <div className="profileinfo absolute top-0 font-times text-[35px] ml-[550px] mt-[290px] mb-6">
         <p><strong>Username:</strong> {user.name}</p>
         <p><strong>Email:</strong> {user.email}</p>
         <p><strong>Location:</strong> {user.location || "Not set"}</p>
@@ -136,32 +136,32 @@ const ProfilePage = () => {
         <p><strong>Bio:</strong> {user.bio || "Not set"}</p>
       </div>
 
-      <button className="edit" onClick={() => setShowEditModal(true)}>Change Username</button>
-      <button className="setprofile" onClick={() => setShowSetupModal(true)} style={{ marginLeft: "10px" }}>
+      <button className="edit bg-[#26782c] px-5 py-[10px] rounded-[10px] text-white text-[20px] absolute right-0 top-0 mt-[600px] mr-[780px] cursor-pointer hover:bg-[#154d19]" onClick={() => setShowEditModal(true)}>Change Username</button>
+      <button className="setprofile bg-[#26782c] px-7 py-[12px] rounded-[10px] text-white text-[20px] absolute right-0 top-0 mt-[600px] mr-[32rem] cursor-pointer hover:bg-[#154d19]" onClick={() => setShowSetupModal(true)} style={{ marginLeft: "10px" }}>
         {profileComplete ? "Edit" : "Set"} Profile
       </button>
 
       {/* Pickups */}
       <h3 className="head">Recent Pickups</h3>
-      <div className="wastecard">
+      <div className="wastecard w-[1450px] mt-[30px] bg-white p-[1.2rem] rounded-[12px] shadow-[0_2px_6px_rgba(0,0,0,0.07)] mb-4 transition-all duration-300 border-2 border-[#eaeaea] hover:shadow-[0_4px_12px_rgba(0,0,0,0.12)]">
         {pickups.length === 0 ? (
           <p>No waste data available.</p>
         ) : (
           pickups.map((pickup, i) => (
-            <div key={i} className="pickup-card">
-              <div className="cardhead">
-                <div className="location">
+            <div key={i} className="pickup-card text-left bg-[#f9f9f9] border border-[#ddd] p-4 rounded-[8px]">
+              <div className="cardhead flex justify-between items-center">
+                <div className="location text-[1.3rem] font-[600] text-[#333]">
                   <p><strong>📍 Location:</strong> {pickup.location}</p>
                 </div>
               </div>
-              <div className="rowinfo">
-                <div className="wastetype">
+              <div className="rowinfo flex justify-between items-center py-[0.3rem] text-[0.95rem] text-[#555]">
+                <div className="wastetype mt-[0.3rem] text-[#555]">
                   <p><strong>🧺 Type:</strong> {pickup.type}</p>
                 </div>
-                <div className="weight">
+                <div className="weight mt-[0.3rem] text-[#555]">
                   <p><strong> ⚖️ Weight:</strong> {pickup.weight}Kg</p>
                 </div>
-                <div className="date">
+                <div className="date mt-[0.3rem] text-[#555]">
                   <p>📅 Date: {new Date(pickup.date).toLocaleDateString()}</p>
                 </div>
               </div>
@@ -184,28 +184,28 @@ const ProfilePage = () => {
 
       {/* Modals */}
       {showEditModal && (
-        <div className="modal-overlay">
-          <div className="modal">
+        <div className="modal-overlay fixed inset-0 bg-[rgba(0,0,0,0.4)] flex justify-center items-center z-[1000]">
+          <div className="modal bg-white p-8 rounded-[8px] w-[300px] text-center">
             <h3>Change Username</h3>
             <form onSubmit={handleEditSubmit}>
               <input type="text" value={editForm.name} onChange={(e) => setEditForm({ ...editForm, name: e.target.value })} required />
-              <button className="btn2" type="submit">Save</button>
-              <button className="btn2" type="button" onClick={() => setShowEditModal(false)}>Cancel</button>
+              <button className="btn2 cursor-pointer" type="submit">Save</button>
+              <button className="btn2 cursor-pointer" type="button" onClick={() => setShowEditModal(false)}>Cancel</button>
             </form>
           </div>
         </div>
       )}
 
       {showSetupModal && (
-        <div className="modal-overlay">
-          <div className="modal">
+        <div className="modal-overlay fixed inset-0 bg-[rgba(0,0,0,0.4)] flex justify-center items-center z-[1000]">
+          <div className="modal bg-white p-[1.5rem] rounded-[10px] w-[320px] shadow-[0_4px_8px_rgba(0,0,0,0.3)] text-center">
             <h3>{profileComplete ? "Edit" : "Set"} Profile Details</h3>
             <form onSubmit={handleSetupSubmit}>
               <input type="text" placeholder="Enter your Location" value={profileForm.location} onChange={(e) => setProfileForm({ ...profileForm, location: e.target.value })} />
               <input type="text" placeholder="Enter your Phone no." value={profileForm.phone} onChange={(e) => setProfileForm({ ...profileForm, phone: e.target.value })} />
               <textarea placeholder="Set your Bio" value={profileForm.bio} onChange={(e) => setProfileForm({ ...profileForm, bio: e.target.value })} />
-              <button className="btn2" type="submit">Save</button>
-              <button className="btn2" type="button" onClick={() => setShowSetupModal(false)}>Cancel</button>
+              <button className="btn2 cursor-pointer" type="submit">Save</button>
+              <button className="btn2 cursor-pointer" type="button" onClick={() => setShowSetupModal(false)}>Cancel</button>
             </form>
           </div>
         </div>

@@ -4,10 +4,8 @@ const cors = require('cors');
 const mongoose = require('mongoose'); 
 const cookieParser = require('cookie-parser');   
 
-const authRouter = require('./App/Routes/web/authroutes');
-const leadRouter = require('./App/Routes/web/leaderboardroutes');
-const userRoutes = require('./App/Routes/web/userroutes');
-const requestPickupRoutes = require('./App/Routes/web/requestpickuproutes');
+const authRoutes = require('./App/Routes/authroutes');
+const userRoutes = require('./App/Routes/userroutes');
 
 const app = express();
 app.set('trust proxy', 1); 
@@ -36,23 +34,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true })); 
 
 //routes
-app.use('/api', authRouter);
+app.use('/api', authRoutes);
 app.use('/api/user', userRoutes);
-app.use('/api/requestpickup', requestPickupRoutes);
-
-// leadboard
-app.use('/api', require('./App/Routes/web/newPickuproutes'));
-app.use('/api', require('./App/Routes/web/leaderboardroutes'));
-
 
 //error handler
 app.use((err, req, res, next) => {
   console.error('Global error:', err);
   if (res.headersSent) return next(err);
-  res.status(err.statusCode || 500).json({
-    success: false,
-    message: err.message || 'Internal Server Error'
-  });
+  res.status(err.statusCode || 500).json({message: err.message || 'Internal Server Error' });
 });
 
 

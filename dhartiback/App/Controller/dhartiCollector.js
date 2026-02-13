@@ -1,5 +1,5 @@
-const Pickup = require('../../Models/pickupmodel');
-const User = require('../../Models/user');
+const Pickup = require('../Models/pickupmodel');
+const User = require('../Models/user');
 
 const addRequest = async (req, res) => {
   try {
@@ -24,8 +24,7 @@ const addRequest = async (req, res) => {
       {
         $push: { pickups: pickup._id },
         $inc: { ecoPoints: pointsEarned },
-      },
-      { new: true }
+      }
     );
 
     res.status(201).json({ message: "Pickup request added successfully", pickup });
@@ -38,14 +37,11 @@ const addRequest = async (req, res) => {
 
 const getMyPickups = async (req, res) => {
   try {
-    const pickups = await PickupRequest
-      .find({ user: req.user.id })
-      .sort({ createdAt: -1 }); 
-    console.log(' Found pickups:', pickups.length, pickups);
-    return res.status(200).json({ pickups });
+    const pickups = await PickupRequest.find({ user: req.user.id }).sort({ createdAt: -1 }); 
+    res.status(200).json({ pickups });
   } catch (error) {
     console.error('Error fetching pickups:', error);
-    return res.status(500).json({ error: 'Failed to fetch pickup data' });
+    res.status(500).json({ error: 'Failed to fetch pickup data' });
   }
 };
 

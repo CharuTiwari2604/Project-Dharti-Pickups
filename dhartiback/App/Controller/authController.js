@@ -1,4 +1,4 @@
-const User = require('../../Models/user'); 
+const User = require('../Models/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -14,7 +14,7 @@ exports.registerUser = async (req, res) => {
       return res.status(400).json({ message: 'User already exists' });
     }
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = await User.create({
+    await User.create({
       name,
       email,
       password: hashedPassword,
@@ -25,9 +25,10 @@ exports.registerUser = async (req, res) => {
     res.status(500).json({ message: 'Registration failed', error: err.message });
   }
 };
+
 exports.loginUser = async (req, res) => {
   const { email, password } = req.body;
-  
+
   try {
     const existingUser = await User.findOne({ email });
     if (!existingUser) return res.status(400).json({ message: 'User does not exist' });
@@ -41,11 +42,11 @@ exports.loginUser = async (req, res) => {
       { expiresIn: '7d' }
     );
     res.cookie('token', token, {
-  httpOnly: true,
-  secure: process.env.NODE_ENV === 'production',
-  sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
-  maxAge: 7 * 24 * 60 * 60 * 1000,
-});
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
     res.status(200).json({
       message: 'Login successful',
       user: {

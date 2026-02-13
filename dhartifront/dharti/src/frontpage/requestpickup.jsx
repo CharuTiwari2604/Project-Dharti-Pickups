@@ -72,7 +72,7 @@ export function RequestPickup() {
 
         try {
             setLoading(true);
-            const res = await axios.post( "/api/requestpickup/request",
+            const res = await axios.post( "/user/request",
                 formData,     
                 {
                     headers: {
@@ -82,7 +82,6 @@ export function RequestPickup() {
 
             alert(res.data.message || "Request sent successfully");
 
-            // Reset form
             setLocation('');
             setLocationInput('');
             setType('Plastic');
@@ -90,7 +89,6 @@ export function RequestPickup() {
             setDate('');
             setImage(null);
 
-            // Redirect to profile page
             navigate("/profile");
         } catch (error) {
             console.error("Error submitting request:", error.response?.data || error.message);
@@ -101,22 +99,18 @@ export function RequestPickup() {
     };
 
     return (
-        <div className="requestpickup" style={{ backgroundImage: `url(${bgreq})` }}>
-            <div className="box">
-                <p className="heading">Request Waste Pickup</p>
-                <form className="form" onSubmit={saveRequest}>
+        <div className="requestpickup flex justify-center bg-cover bg-no-repeat bg-center py-8 px-4 min-h-screen" style={{ backgroundImage: `url(${bgreq})` }}>
+            <div className="box bg-[#E6F4EA] w-full max-w-[900px] rounded-[26px] shadow-[0_2px_6px_rgba(0,0,0,0.1)] opacity-[0.88] p-8 box-border">
+                <p className="heading text-[2.5rem] font-bold text-[#2F855A] text-center mb-6 mt-4">Request Waste Pickup</p>
+                <form className="form bg-white border border-[#E2E8F0] rounded-lg p-8 box-border" onSubmit={saveRequest}>
                     <div>
-                        <label className="label2" htmlFor="location">Location</label>
+                        <label className="label2 text-[1.225rem] font-medium text-[#2D3748] mt-6 block" htmlFor="location">Location</label>
                         <input type="text" value={locationInput} onChange={handleLocationChange} placeholder="Enter your location" 
                             className="w-full border border-gray-300 rounded px-4 py-2" required/>
                         {suggestions.length > 0 && (
                             <ul className="absolute z-10 bg-white border border-gray-300 rounded mt-1 max-h-48 overflow-y-auto w-full shadow-md">
                                 {suggestions.map((place, index) => (
-                                    <li
-                                        key={index}
-                                        className="p-2 hover:bg-gray-100 cursor-pointer"
-                                        onClick={() => handleSuggestionClick(place)}
-                                    >
+                                    <li key={index} className="p-2 hover:bg-gray-100 cursor-pointer" onClick={() => handleSuggestionClick(place)} >
                                         {place.display_name}
                                     </li>
                                 ))}
@@ -124,10 +118,10 @@ export function RequestPickup() {
                         )}
                     </div>
 
-                    <div className="inline">
+                    <div className="Inline flex justify-between gap-[10rem] mt-[1rem] flex-wrap">
                         <div>
-                            <label className="label2" htmlFor="type">Waste Type</label>
-                            <select className="waste" id="type" value={type} onChange={(e) => setType(e.target.value)}  required >
+                            <label className="label2 text-[1.225rem] font-medium text-[#2D3748] mt-6 block" htmlFor="type">Waste Type</label>
+                            <select className="text-[1.125rem] font-[500] border-[2px] border-[#CBD5E0] rounded-[8px] h-[45px] w-[300px] mt-[10px] pl-[20px] pr-[10px] box-border bg-white cursor-pointer"id="type" value={type} onChange={(e) => setType(e.target.value)}  required >
                                 <option>Plastic</option>
                                 <option>Paper</option>
                                 <option>Metal</option>
@@ -135,24 +129,25 @@ export function RequestPickup() {
                             </select>
                         </div>
 
-                        <div className="weight">
-                            <label className="label2" htmlFor="weight">Estimated Weight</label>
-                            <input className="waste"  type="text" id="weight"  placeholder="eg. 50"
+                        <div className="weight flex-1 min-w-[300px] ">
+                            <label className="label2 text-[1.225rem] font-medium text-[#2D3748] mt-6 block" htmlFor="weight">Estimated Weight</label>
+                            <input className="text-[1.125rem] font-[500] border-[2px] border-[#CBD5E0] rounded-[8px] h-[45px] w-full max-w-[700px] mt-[10px] pl-[20px] pr-[10px] box-border cursor-pointer"type="text" id="weight"  placeholder="eg. 50"
                                 value={weight} onChange={(e) => setWeight(e.target.value)} required />
                         </div>
                     </div>
                     <div>
 
-                        <label className="label2" htmlFor="date">Preferred Pickup Date</label>
-                        <input className="waste" type="date" id="date" value={date} onChange={(e) => setDate(e.target.value)} required/>
+                        <label className="label2 text-[1.225rem] font-medium text-[#2D3748] mt-6 block" htmlFor="date">Preferred Pickup Date</label>
+                        <input className="waste text-[1.125rem] font-medium border-2 border-[#CBD5E0] rounded-lg h-[45px] w-[300px] mt-[10px] pl-5 box-border" type="date" id="date" value={date} onChange={(e) => setDate(e.target.value)} required/>
                     </div>
 
                     <div>
-                        <label className="label2" htmlFor="image">Upload Image (optional)</label>
-                        <input className="fileinput" type="file" id="image" accept="image/*" onChange={(e) => setImage(e.target.files[0])} />
+                        <label className="label2 text-[1.225rem] font-medium text-[#2D3748] mt-6 block" htmlFor="image">Upload Image (optional)</label>
+                        <input className="fileinput text-base p-2 border-2 border-[#CBD5E0] rounded-lg bg-[#F7FAFC] cursor-pointer mt-4 w-full box-border file:bg-[#38A169] file:text-white file:border-none file:px-4 file:py-2 file:mr-3 file:rounded-md file:cursor-pointer hover:file:bg-[#2F855A] file:transition-colors"
+                         type="file" id="image" accept="image/*" onChange={(e) => setImage(e.target.files[0])} />
                     </div>
 
-                    <button type="submit" disabled={loading}>
+                    <button type="submit" disabled={loading} className="w-full p-3 bg-[#38A169] text-white rounded-lg text-base cursor-pointer transition-colors duration-200 mt-12 font-semibold hover:bg-[#2F855A] disabled:bg-gray-400">
                         {loading ? "Sending..." : "Send Request"}
                     </button>
                 </form>
