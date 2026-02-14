@@ -9,13 +9,4 @@ const axiosInstance = axios.create({
   }
 });
 
-// axiosInstance.interceptors.request.use(config => {
-//   if (config.baseURL?.endsWith('/api') && config.url?.startsWith('/api')) {
-//     config.url = config.url.replace(/^\/api/, '');
-//   }
-//   return config;
-// }, error => {
-//   return Promise.reject(error);
-// });
-
 export default axiosInstance;
